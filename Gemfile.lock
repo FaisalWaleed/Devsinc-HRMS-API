@@ -50,8 +50,8 @@ GEM
       railties (>= 4.1.0, < 5.2)
       responders
       warden (~> 1.2.3)
-    devise_token_auth (0.1.42)
-      devise (> 3.5.2, <= 4.3)
+    devise_token_auth (0.1.43.beta1)
+      devise (> 3.5.2, < 4.4)
       rails (< 6)
     erubi (1.7.0)
     ffi (1.9.23)
@@ -144,7 +144,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
-  devise_token_auth
+  devise_token_auth (~> 0.1.43.beta1)
   listen (>= 3.0.5, < 3.2)
   omniauth
   pg (>= 0.18, < 2.0)
