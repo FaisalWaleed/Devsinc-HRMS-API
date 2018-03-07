@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180302102415) do
+ActiveRecord::Schema.define(version: 20180306075911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,32 @@ ActiveRecord::Schema.define(version: 20180302102415) do
     t.datetime "updated_at", null: false
     t.index ["custom_domain"], name: "index_companies_on_custom_domain"
     t.index ["subdomain"], name: "index_companies_on_subdomain"
+  end
+
+  create_table "company_departments", force: :cascade do |t|
+    t.bigint "company_id"
+    t.bigint "department_id"
+    t.index ["company_id", "department_id"], name: "index_company_departments_on_company_id_and_department_id", unique: true
+    t.index ["company_id"], name: "index_company_departments_on_company_id"
+    t.index ["department_id"], name: "index_company_departments_on_department_id"
+  end
+
+  create_table "department_users", force: :cascade do |t|
+    t.bigint "department_id"
+    t.bigint "user_id"
+    t.index ["department_id", "user_id"], name: "index_department_users_on_department_id_and_user_id", unique: true
+    t.index ["department_id"], name: "index_department_users_on_department_id"
+    t.index ["user_id"], name: "index_department_users_on_user_id"
+  end
+
+  create_table "departments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "company_id", null: false
+    t.index ["company_id"], name: "index_departments_on_company_id"
+    t.index ["name"], name: "index_departments_on_name"
   end
 
   create_table "users", force: :cascade do |t|
@@ -50,12 +76,20 @@ ActiveRecord::Schema.define(version: 20180302102415) do
     t.datetime "updated_at", null: false
     t.string "username"
     t.bigint "company_id", null: false
+    t.bigint "department_id", null: false
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["department_id"], name: "index_users_on_department_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "company_departments", "companies"
+  add_foreign_key "company_departments", "departments"
+  add_foreign_key "department_users", "departments"
+  add_foreign_key "department_users", "users"
+  add_foreign_key "departments", "companies"
+  add_foreign_key "users", "departments"
 end
