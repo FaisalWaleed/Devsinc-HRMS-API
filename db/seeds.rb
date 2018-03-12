@@ -23,19 +23,20 @@ puts "\n"
 # roles -= admin
 
 print 'Creating departments '
+company = Company.first
 departments = [
-  { name: 'Super Admin', description: 'Super Admin for 1 tenant', company_id: companies[0].id },
-  { name: 'Admin', description: 'Department for Admins', company_id: companies[0].id },
-  { name: 'Management', description: 'Department for Managements', company_id: companies[0].id },
-  { name: 'Accounts', description: 'Department for Accounts', company_id: companies[0].id },
-  { name: 'Human Resource', description: 'Department for Human Resource', company_id: companies[0].id },
-  { name: 'Management Information System', description: 'Department for Management Information System', company_id: companies[0].id },
-  { name: 'Information Technology', description: 'Department for Information Technology', company_id: companies[0].id },
-  { name: 'Event Operations', description: 'Department for Event Operations', company_id: companies[0].id }
-].map { |u| print '.'; Department.find_or_create_by!(u) { |m| m.assign_attributes(u) } }
+  { name: 'Super Admin', description: 'Super Admin for 1 tenant' },
+  { name: 'Admin', description: 'Department for Admins' },
+  { name: 'Management', description: 'Department for Managements' },
+  { name: 'Accounts', description: 'Department for Accounts' },
+  { name: 'Human Resource', description: 'Department for Human Resource' },
+  { name: 'Management Information System', description: 'Department for Management Information System' },
+  { name: 'Information Technology', description: 'Department for Information Technology' },
+  { name: 'Event Operations', description: 'Department for Event Operations' }
+].map { |u| print '.'; company.departments.find_or_create_by!(u) { |m| m.assign_attributes(u) } }
 
-print 'creating company departments'
-departments.map { |d| print '.'; Company.find(d.company_id).company_departments.find_or_create_by!(company_id: d.company_id, department_id: d.id) }
+# print 'creating company departments'
+# departments.map { |d| print '.'; Company.find(d.company_id).company_departments.find_or_create_by!(company_id: d.company_id, department_id: d.id) }
 
 print 'creating users '
 pass = { password: 'pass1234', password_confirmation: 'pass1234' }
