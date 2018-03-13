@@ -8,5 +8,9 @@ class User < ActiveRecord::Base
   validates :company_id, presence: true
 
   belongs_to :company
-  belongs_to :department
+  # belongs_to :department
+  has_many :department_users
+  has_many :users, through: :department_users
+  has_many :department_users, autosave: true, dependent: :destroy
+  has_many :users, through: :department_users
 end

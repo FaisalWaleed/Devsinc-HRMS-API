@@ -46,8 +46,6 @@ ActiveRecord::Schema.define(version: 20180306075911) do
     t.string "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "company_id", null: false
-    t.index ["company_id"], name: "index_departments_on_company_id"
     t.index ["name"], name: "index_departments_on_name"
   end
 
@@ -90,6 +88,5 @@ ActiveRecord::Schema.define(version: 20180306075911) do
   add_foreign_key "company_departments", "departments"
   add_foreign_key "department_users", "departments"
   add_foreign_key "department_users", "users"
-  add_foreign_key "departments", "companies"
   add_foreign_key "users", "departments"
 end
