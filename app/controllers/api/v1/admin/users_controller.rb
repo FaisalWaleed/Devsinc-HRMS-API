@@ -1,16 +1,12 @@
 class Api::V1::Admin::UsersController < ApplicationController
+  before_action :set_user, only: [:update,:destroy]
 
   def index
-    render :json => User.select(:id,:email,:name,:username,:image,:company_id)
+    render :json => User.all
   end
 
   def update
-    @user = User.find(params[:id])
-    @user.name = params[:name]
-    @user.username = params[:username]
-    @user.email = params[:email]
-    @user.company_id = params[:company_id]
-    @user.save!
+    @user.update!(user_params)
     render :json => @user
   end
 
@@ -22,4 +18,15 @@ class Api::V1::Admin::UsersController < ApplicationController
       }
     end
   end
+
+  private
+
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def user_params
+    params.require(:user).permit(:id,:name,:email,:username,:image,:company_id)
+  end
+
 end
