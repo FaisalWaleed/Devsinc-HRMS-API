@@ -48,8 +48,8 @@ Rails.application.configure do
   #Mail inbox settings
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :user_name => 'ba64b9cbaece5d',
-      :password => '1f267d8fac28fd',
+      :user_name => ENV["MAILTRAP_USERNAME"],
+      :password => ENV["MAILTRAP_PASSWORD"],
       :address => 'smtp.mailtrap.io',
       :domain => 'smtp.mailtrap.io',
       :port => '2525',
