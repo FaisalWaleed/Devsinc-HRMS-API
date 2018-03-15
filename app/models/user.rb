@@ -14,4 +14,10 @@ class User < ActiveRecord::Base
   has_many :users, through: :department_users
   has_many :department_users, autosave: true, dependent: :destroy
   has_many :users, through: :department_users
+
+  after_create :send_welcome_email
+
+  def send_welcome_email
+    UserMailer.welcome_email(self).deliver_now
+  end
 end
