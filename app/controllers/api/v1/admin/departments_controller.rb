@@ -3,7 +3,7 @@ module Api
     module Admin
       class DepartmentsController < ApplicationController
         wrap_parameters :department
-        before_action :set_company
+        before_action :set_company, only: [:create, :destroy]
 
         def index
           departments = Department.all
