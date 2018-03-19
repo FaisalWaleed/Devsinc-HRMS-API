@@ -9,12 +9,8 @@ class User < ActiveRecord::Base
   validates :company_id, presence: true
 
   belongs_to :company
-  # belongs_to :department
-  has_many :department_users
-  has_many :users, through: :department_users
-  has_many :department_users, autosave: true, dependent: :destroy
-  has_many :users, through: :department_users
-
+  has_many :user_roles
+  has_many :roles, through: :user_roles
   after_create :send_welcome_email
 
   def send_welcome_email

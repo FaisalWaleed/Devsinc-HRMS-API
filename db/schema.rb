@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180306075911) do
+ActiveRecord::Schema.define(version: 20180313094933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,20 +33,30 @@ ActiveRecord::Schema.define(version: 20180306075911) do
     t.index ["department_id"], name: "index_company_departments_on_department_id"
   end
 
-  create_table "department_users", force: :cascade do |t|
-    t.bigint "department_id"
-    t.bigint "user_id"
-    t.index ["department_id", "user_id"], name: "index_department_users_on_department_id_and_user_id", unique: true
-    t.index ["department_id"], name: "index_department_users_on_department_id"
-    t.index ["user_id"], name: "index_department_users_on_user_id"
-  end
-
   create_table "departments", force: :cascade do |t|
     t.string "name", null: false
     t.string "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_departments_on_name"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.bigint "department_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_roles_on_department_id"
+  end
+
+  create_table "user_roles", force: :cascade do |t|
+    t.bigint "role_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_user_roles_on_role_id"
+    t.index ["user_id"], name: "index_user_roles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -74,10 +84,8 @@ ActiveRecord::Schema.define(version: 20180306075911) do
     t.datetime "updated_at", null: false
     t.string "username"
     t.bigint "company_id", null: false
-    t.bigint "department_id", null: false
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["department_id"], name: "index_users_on_department_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
@@ -86,7 +94,6 @@ ActiveRecord::Schema.define(version: 20180306075911) do
 
   add_foreign_key "company_departments", "companies"
   add_foreign_key "company_departments", "departments"
-  add_foreign_key "department_users", "departments"
-  add_foreign_key "department_users", "users"
-  add_foreign_key "users", "departments"
+  add_foreign_key "user_roles", "roles"
+  add_foreign_key "user_roles", "users"
 end

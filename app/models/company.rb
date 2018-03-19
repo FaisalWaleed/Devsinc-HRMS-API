@@ -1,6 +1,5 @@
 class Company < ApplicationRecord
   has_many :users
-  has_many :user_roles
 
   has_many :company_departments, autosave: true, dependent: :destroy
   has_many :departments, through: :company_departments

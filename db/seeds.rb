@@ -41,19 +41,19 @@ departments = [
 print 'creating users '
 pass = { password: 'pass1234', password_confirmation: 'pass1234' }
 users = [
-  { email: 'admin@devsinc.com', company_id: companies[0].id, department_id: departments[0].id },
-  { email: 'user2@devsinc.com', company_id: companies[0].id, department_id: departments[6].id },
-  { email: 'user3@devsinc.com', company_id: companies[0].id, department_id: departments[6].id },
-  { email: 'user4@devsinc.com', company_id: companies[0].id, department_id: departments[6].id },
-  { email: 'user5@devsinc.com', company_id: companies[0].id, department_id: departments[6].id },
-  { email: 'user6@devsinc.com', company_id: companies[0].id, department_id: departments[6].id }
+  { email: 'admin@devsinc.com', company_id: companies[0].id },
+  { email: 'user2@devsinc.com', company_id: companies[0].id },
+  { email: 'user3@devsinc.com', company_id: companies[0].id },
+  { email: 'user4@devsinc.com', company_id: companies[0].id },
+  { email: 'user5@devsinc.com', company_id: companies[0].id },
+  { email: 'user6@devsinc.com', company_id: companies[0].id }
 ].map do |u|
   print '.'
   User.find_or_create_by!(u) { |u| u.assign_attributes(pass) }
 end
 
-print 'creating department users '
-users.map { |u| print '.'; Department.find(u.department_id).department_users.find_or_create_by!(department_id: u.department_id, user_id: u.id) }
+# print 'creating department users '
+# users.map { |u| print '.'; Department.find(u.department_id).department_users.find_or_create_by!(department_id: u.department_id, user_id: u.id) }
 
 # group = Group.last
 # user = User.last
