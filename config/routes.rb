@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         resources :roles
         resources :departments
         resources :users
+        resources :tickets
       end
     end
   end
