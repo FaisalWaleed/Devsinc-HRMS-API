@@ -124,6 +124,17 @@ ActiveRecord::Schema.define(version: 20180321124243) do
     t.datetime "updated_at", null: false
     t.string "username"
     t.bigint "company_id", null: false
+    t.string "contact_number"
+    t.string "secondary_contact_number"
+    t.string "emergency_contact_person_name"
+    t.string "emergency_contact_person_relation"
+    t.string "emergency_contact_person_number"
+    t.date "dob"
+    t.string "permanent_address"
+    t.string "temporary_address"
+    t.string "bank_account_number"
+    t.jsonb "employment_history"
+    t.jsonb "performance_evaluation"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
