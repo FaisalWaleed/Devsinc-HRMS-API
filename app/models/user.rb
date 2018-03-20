@@ -12,7 +12,8 @@ class User < ActiveRecord::Base
   has_many :user_roles
   has_many :roles, through: :user_roles
   has_many :ticket_user
-  has_many :tickets, through: :ticket_user
+  has_many :assigned_tickets, through: :ticket_user, source: :ticket
+  has_many :tickets
 
   after_create :send_welcome_email
 

@@ -9,7 +9,7 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-#
+
 ActiveRecord::Schema.define(version: 20180319134100) do
 
   # These are extensions that must be enabled in order to support this database
@@ -50,15 +50,6 @@ ActiveRecord::Schema.define(version: 20180319134100) do
     t.index ["department_id"], name: "index_roles_on_department_id"
   end
 
-  create_table "user_roles", force: :cascade do |t|
-    t.bigint "role_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["role_id"], name: "index_user_roles_on_role_id"
-    t.index ["user_id"], name: "index_user_roles_on_user_id"
-  end
-
   create_table "ticket_users", force: :cascade do |t|
     t.bigint "ticket_id"
     t.bigint "user_id"
@@ -70,6 +61,7 @@ ActiveRecord::Schema.define(version: 20180319134100) do
   end
 
   create_table "tickets", force: :cascade do |t|
+    t.bigint "user_id"
     t.integer "department_id"
     t.integer "role_id"
     t.string "title"
@@ -77,6 +69,16 @@ ActiveRecord::Schema.define(version: 20180319134100) do
     t.date "due_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tickets_on_user_id"
+  end
+
+  create_table "user_roles", force: :cascade do |t|
+    t.bigint "role_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_user_roles_on_role_id"
+    t.index ["user_id"], name: "index_user_roles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -114,8 +116,9 @@ ActiveRecord::Schema.define(version: 20180319134100) do
 
   add_foreign_key "company_departments", "companies"
   add_foreign_key "company_departments", "departments"
-  add_foreign_key "user_roles", "roles"
-  add_foreign_key "user_roles", "users"
   add_foreign_key "ticket_users", "tickets"
   add_foreign_key "ticket_users", "users"
+  add_foreign_key "tickets", "users"
+  add_foreign_key "user_roles", "roles"
+  add_foreign_key "user_roles", "users"
 end

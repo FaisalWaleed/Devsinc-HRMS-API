@@ -1,9 +1,17 @@
-class Api::V1::Admin::TicketsController < ApplicationController
+class Api::V1::TicketsController < ApplicationController
   include TicketsHelper
   before_action :set_ticket, only: [:update,:destroy]
 
   def index
-    render :json => Ticket.all
+    # if admin
+    #   return User.all
+    # end
+    current_user.inspect
+    render :json => current_user.tickets
+  end
+
+  def assigned
+    render :json => current_user.assigned_tickets
   end
 
   def create
@@ -20,11 +28,15 @@ class Api::V1::Admin::TicketsController < ApplicationController
         if @ticket
           if !@ticket.role_id
             department = Department.find(ticket["department_id"])
-            assign_ticket_to_department_users(department,@ticket)
+            users = []
+            department.roles.each do |role|
+              users << role.users
+            end
+            assign_ticket_to_department_users(users,@ticket)
           else
             ticket["user_id"].each do |user|
               user = User.find(user)
-              user.tickets << @ticket
+              user.assigned_ticket << @ticket
             end
           end
         end
@@ -55,7 +67,7 @@ class Api::V1::Admin::TicketsController < ApplicationController
   end
 
   def ticket_params
-    params.require(:ticket).permit(:id,:title,:description,:status,:due_date)
+    params.require(:ticket).permit(:id,:user_id,:title,:description,:status,:due_date)
   end
 
 end

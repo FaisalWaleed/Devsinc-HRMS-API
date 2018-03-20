@@ -2,7 +2,7 @@ module TicketsHelper
 
   def all_deps_chosen? ticket_options
     ticket_options.each do |option|
-      if option["department"] == 0
+      if option["department_id"] == 0
         return true
       end
     end
@@ -33,14 +33,16 @@ module TicketsHelper
   def assign_ticket_to_all_users ticket
     if ticket
       User.all.each do |user|
-        user.tickets << ticket
+        user.assigned_tickets << ticket
       end
     end
   end
 
-  def assign_ticket_to_department_users( department, ticket )
-  #   assign ticket to department users here
-  #   through department.roles.users relation
+  def assign_ticket_to_department_users( users, ticket )
+    #   SELECT user_roles.user_id FROM roles JOIN user_roles ON user_roles.role_id=roles.id WHERE roles.department_id = 1
+    users.each do |user|
+      user.assigned_tickets << ticket
+    end
   end
 
 end

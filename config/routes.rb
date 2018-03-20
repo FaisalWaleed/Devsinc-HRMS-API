@@ -7,7 +7,9 @@ Rails.application.routes.draw do
         resources :roles
         resources :departments
         resources :users
-        resources :tickets
+      end
+      resources :tickets do
+        get :assigned, on: :collection
       end
     end
   end
