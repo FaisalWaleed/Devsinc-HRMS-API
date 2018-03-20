@@ -7,33 +7,25 @@ class Api::V1::Admin::TicketsController < ApplicationController
   end
 
   def create
-    if all_deps_chosen? params[:ticket][:ticket_options]
-      params = ActionController::Parameters.new(ticket_params)
-      params = params.merge(department_id: 0,role_id: 0)
+    if all_deps_chosen? (params[:ticket][:ticket_options])
+      params = ticket_params.merge(department_id: 0,role_id: 0)
       @ticket = Ticket.create(params)
-
-      User.all.each do |user|
-        user.tickets << @ticket
-      end
-
+      assign_ticket_to_all_users(@ticket)
     else
-      tickets = refine_ticket_options params[:ticket][:ticket_options]
-      tickets.each do |ticket|
-        #tickets = [
-        # {department:1,role:4,user:[5,3,2,9]}
-        # {department:5,role:9,user:[14,22,44,12]}
-        # ]
-        params = ActionController::Parameters.new(ticket_params)
-        params = params.merge(department_id: ticket["department"], role_id: ticket["role"])
+      ticket_options = refine_ticket_options params[:ticket][:ticket_options]
+      ticket_options.each do |ticket|
+        params = ticket_params
+        params = params.merge(department_id: ticket["department_id"], role_id: ticket["role_id"])
         @ticket = Ticket.create(params)
-
-        if @ticket.role_id == 0
-          #fetch all users of department_id and assign them ticket
-          # or users array should have all user ids
-        else
-          ticket["user"].each do |user|
-            user = User.find(user)
-            user.tickets << @ticket
+        if @ticket
+          if !@ticket.role_id
+            department = Department.find(ticket["department_id"])
+            assign_ticket_to_department_users(department,@ticket)
+          else
+            ticket["user_id"].each do |user|
+              user = User.find(user)
+              user.tickets << @ticket
+            end
           end
         end
       end

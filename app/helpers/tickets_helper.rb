@@ -30,4 +30,17 @@ module TicketsHelper
     }
   end
 
+  def assign_ticket_to_all_users ticket
+    if ticket
+      User.all.each do |user|
+        user.tickets << ticket
+      end
+    end
+  end
+
+  def assign_ticket_to_department_users( department, ticket )
+  #   assign ticket to department users here
+  #   through department.roles.users relation
+  end
+
 end

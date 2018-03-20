@@ -116,9 +116,6 @@ ActiveRecord::Schema.define(version: 20180319134100) do
   add_foreign_key "company_departments", "departments"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
-  add_foreign_key "department_users", "departments"
-  add_foreign_key "department_users", "users"
   add_foreign_key "ticket_users", "tickets"
   add_foreign_key "ticket_users", "users"
-  add_foreign_key "users", "departments"
 end
