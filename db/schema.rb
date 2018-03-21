@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319134100) do
+ActiveRecord::Schema.define(version: 20180321124243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.bigint "ticket_id"
+    t.bigint "user_id"
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ticket_id"], name: "index_comments_on_ticket_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
@@ -50,10 +60,18 @@ ActiveRecord::Schema.define(version: 20180319134100) do
     t.index ["department_id"], name: "index_roles_on_department_id"
   end
 
+  create_table "ticket_statuses", force: :cascade do |t|
+    t.bigint "ticket_id"
+    t.string "status"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ticket_id"], name: "index_ticket_statuses_on_ticket_id"
+  end
+
   create_table "ticket_users", force: :cascade do |t|
     t.bigint "ticket_id"
     t.bigint "user_id"
-    t.string "status", default: "Opened"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ticket_id"], name: "index_ticket_users_on_ticket_id"
@@ -114,8 +132,11 @@ ActiveRecord::Schema.define(version: 20180319134100) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "comments", "tickets"
+  add_foreign_key "comments", "users"
   add_foreign_key "company_departments", "companies"
   add_foreign_key "company_departments", "departments"
+  add_foreign_key "ticket_statuses", "tickets"
   add_foreign_key "ticket_users", "tickets"
   add_foreign_key "ticket_users", "users"
   add_foreign_key "tickets", "users"

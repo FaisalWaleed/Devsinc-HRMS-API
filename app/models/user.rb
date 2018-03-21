@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   has_many :assigned_tickets, through: :ticket_user, source: :ticket
   has_many :tickets
 
+  # scope :abc, -> {TicketUser.joins(:ticket).select('tickets.*,ticket_users.status')}
+
   after_create :send_welcome_email
 
   def send_welcome_email

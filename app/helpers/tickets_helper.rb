@@ -12,8 +12,8 @@ module TicketsHelper
   def get_deps_with_all_roles ticket_options
     all_roles_chosen_deps = []
     ticket_options.each do |option|
-      unless option["role"]
-        all_roles_chosen_deps.push(option["department"])
+      if option["role_id"] == 0
+        all_roles_chosen_deps.push(option["department_id"])
       end
     end
     all_roles_chosen_deps
@@ -24,17 +24,15 @@ module TicketsHelper
     ticket_options.select { |option|
       (!option.empty?) &&
           (
-          (deps_with_all_roles.include?(option["department"]) && option["role"] === 0) ||
-              (!deps_with_all_roles.include?(option["department"]) && option["role"] != 0)
+          (deps_with_all_roles.include?(option["department_id"]) && option["role_id"] === 0) ||
+              (!deps_with_all_roles.include?(option["department_id"]) && option["role_id"] != 0)
           )
     }
   end
 
   def assign_ticket_to_all_users ticket
-    if ticket
       User.all.each do |user|
         user.assigned_tickets << ticket
-      end
     end
   end
 

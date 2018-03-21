@@ -1,12 +1,12 @@
 class Api::V1::TicketsController < ApplicationController
   include TicketsHelper
   before_action :set_ticket, only: [:update,:destroy]
+  before_action :authenticate_user!
 
   def index
     # if admin
     #   return User.all
     # end
-    current_user.inspect
     render :json => current_user.tickets
   end
 
@@ -16,17 +16,24 @@ class Api::V1::TicketsController < ApplicationController
 
   def create
     if all_deps_chosen? (params[:ticket][:ticket_options])
-      params = ticket_params.merge(department_id: 0,role_id: 0)
-      @ticket = Ticket.create(params)
+      puts "reached all deps".inspect
+      merged_params = ticket_params.merge(user_id: current_user.id,department_id: 0,role_id: 0)
+      @ticket = Ticket.create(merged_params)
       assign_ticket_to_all_users(@ticket)
     else
-      ticket_options = refine_ticket_options params[:ticket][:ticket_options]
-      ticket_options.each do |ticket|
+      puts "reached start of not all deps".inspect
+      refined_ticket_options = refine_ticket_options params[:ticket][:ticket_options]
+      puts "reached after refine ticket options".inspect
+      refined_ticket_options.each do |ticket|
         params = ticket_params
-        params = params.merge(department_id: ticket["department_id"], role_id: ticket["role_id"])
+        params = params.merge(user_id: current_user.id,department_id: ticket["department_id"], role_id: ticket["role_id"])
+        puts current_user.id.inspect
+        puts "reached not all deps".inspect
         @ticket = Ticket.create(params)
         if @ticket
-          if !@ticket.role_id
+          puts "reached if ticket".inspect
+          if @ticket.role_id == 0
+            puts "reached role was 0".inspect
             department = Department.find(ticket["department_id"])
             users = []
             department.roles.each do |role|
@@ -34,9 +41,10 @@ class Api::V1::TicketsController < ApplicationController
             end
             assign_ticket_to_department_users(users,@ticket)
           else
+            puts "reached role was not 0".inspect
             ticket["user_id"].each do |user|
               user = User.find(user)
-              user.assigned_ticket << @ticket
+              user.assigned_tickets << @ticket
             end
           end
         end
@@ -47,7 +55,8 @@ class Api::V1::TicketsController < ApplicationController
   end
 
   def update
-    @ticket.update!(ticket_params)
+    @ticket.set_status(params[:ticket][:status])
+    # @ticket.update!(ticket_params)
     render :json => @ticket
   end
 
