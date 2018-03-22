@@ -61,12 +61,12 @@ ActiveRecord::Schema.define(version: 20180321124243) do
   end
 
   create_table "ticket_statuses", force: :cascade do |t|
-    t.bigint "ticket_id"
+    t.bigint "ticket_user_id"
     t.string "status"
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["ticket_id"], name: "index_ticket_statuses_on_ticket_id"
+    t.index ["ticket_user_id"], name: "index_ticket_statuses_on_ticket_user_id"
   end
 
   create_table "ticket_users", force: :cascade do |t|
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(version: 20180321124243) do
   add_foreign_key "comments", "users"
   add_foreign_key "company_departments", "companies"
   add_foreign_key "company_departments", "departments"
-  add_foreign_key "ticket_statuses", "tickets"
+  add_foreign_key "ticket_statuses", "ticket_users"
   add_foreign_key "ticket_users", "tickets"
   add_foreign_key "ticket_users", "users"
   add_foreign_key "tickets", "users"
