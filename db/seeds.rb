@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 print 'crecating companies '
 companies = [
-  { name: 'Devsinc', custom_domain: 'devsinc.com', subdomain: 'devsinc' }
+    { name: 'Devsinc', custom_domain: 'devsinc.com', subdomain: 'devsinc' }
 ].map { |c| print '.'; Company.find_or_create_by(c) }
 puts "\n"
 
@@ -25,14 +25,14 @@ puts "\n"
 print 'Creating departments '
 company = Company.first
 departments = [
-  { name: 'Super Admin', description: 'Super Admin for 1 tenant' },
-  { name: 'Admin', description: 'Department for Admins' },
-  { name: 'Management', description: 'Department for Managements' },
-  { name: 'Accounts', description: 'Department for Accounts' },
-  { name: 'Human Resource', description: 'Department for Human Resource' },
-  { name: 'Management Information System', description: 'Department for Management Information System' },
-  { name: 'Information Technology', description: 'Department for Information Technology' },
-  { name: 'Event Operations', description: 'Department for Event Operations' }
+    { name: 'Super Admin', description: 'Super Admin for 1 tenant' },
+    { name: 'Admin', description: 'Department for Admins' },
+    { name: 'Management', description: 'Department for Managements' },
+    { name: 'Accounts', description: 'Department for Accounts' },
+    { name: 'Human Resource', description: 'Department for Human Resource' },
+    { name: 'Management Information System', description: 'Department for Management Information System' },
+    { name: 'Information Technology', description: 'Department for Information Technology' },
+    { name: 'Event Operations', description: 'Department for Event Operations' }
 ].map { |u| print '.'; company.departments.find_or_create_by!(u) { |m| m.assign_attributes(u) } }
 
 # print 'creating company departments'
@@ -41,16 +41,65 @@ departments = [
 print 'creating users '
 pass = { password: 'pass1234', password_confirmation: 'pass1234' }
 users = [
-  { email: 'admin@devsinc.com', company_id: companies[0].id },
-  { email: 'user2@devsinc.com', company_id: companies[0].id },
-  { email: 'user3@devsinc.com', company_id: companies[0].id },
-  { email: 'user4@devsinc.com', company_id: companies[0].id },
-  { email: 'user5@devsinc.com', company_id: companies[0].id },
-  { email: 'user6@devsinc.com', company_id: companies[0].id }
+    { name: 'Devsinc', email: 'admin@devsinc.com', company_id: companies[0].id },
+    { name: 'user2', email: 'user2@devsinc.com', company_id: companies[0].id },
+    { name: 'user3', email: 'user3@devsinc.com', company_id: companies[0].id },
+    { name: 'user4', email: 'user4@devsinc.com', company_id: companies[0].id },
+    { name: 'user5', email: 'user5@devsinc.com', company_id: companies[0].id },
+    { name: 'user6', email: 'user6@devsinc.com', company_id: companies[0].id }
 ].map do |u|
   print '.'
   User.find_or_create_by!(u) { |u| u.assign_attributes(pass) }
 end
+
+Role.create(
+    {
+        title: 'Admin',
+        department_id: 1
+
+    }
+)
+
+Department.find(1).roles << Role.last
+Role.last.users << User.find(1)
+Role.last.users << User.find(2)
+
+Role.create(
+    {
+        title: 'Manager',
+        department_id: 1
+
+    }
+)
+
+Department.find(1).roles << Role.last
+Role.last.users << User.find(3)
+Role.last.users << User.find(4)
+
+Role.create(
+    {
+        title: 'Accountant',
+        department_id: 2
+
+    }
+)
+
+Department.find(2).roles << Role.last
+Role.last.users << User.find(5)
+
+Role.create(
+    {
+        title: 'Super Man',
+        department_id: 2
+
+    }
+)
+
+Department.find(2).roles << Role.last
+Role.last.users << User.find(6)
+
+
+
 
 # print 'creating department users '
 # users.map { |u| print '.'; Department.find(u.department_id).department_users.find_or_create_by!(department_id: u.department_id, user_id: u.id) }

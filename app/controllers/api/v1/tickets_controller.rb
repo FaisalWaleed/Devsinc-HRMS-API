@@ -1,7 +1,7 @@
 class Api::V1::TicketsController < ApplicationController
   include TicketsHelper
   before_action :set_ticket, only: [:update,:destroy]
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
 
   def index
     # if admin
@@ -85,6 +85,23 @@ class Api::V1::TicketsController < ApplicationController
           message: "Successfully deleted ticket"
       }
     end
+  end
+
+  def ticket_option
+    options = {department_id: params[:id]}
+    options[:roles] = {}
+    Department.find(params[:id]).roles.each do |role|
+      options[:roles][role.id] =
+          {
+              :role_id => role.id,
+              :role_name => role.title,
+              :users => role.users.select(:id,:name)
+          }
+
+    end
+
+    render :json => options
+
   end
 
   private

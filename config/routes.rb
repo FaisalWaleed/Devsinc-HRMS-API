@@ -9,7 +9,9 @@ Rails.application.routes.draw do
         resources :users
       end
       resources :tickets do
+        resources :comments
         get :assigned, on: :collection
+        get :ticket_option, on: :collection
       end
     end
   end
