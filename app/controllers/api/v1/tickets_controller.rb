@@ -27,17 +27,19 @@ class Api::V1::TicketsController < ApplicationController
         params = params.merge(user_id: current_user.id,department_id: ticket["department_id"], role_id: ticket["role_id"])
         @ticket = Ticket.create(params)
         if @ticket
-          if @ticket.role_id == 0
+          if ticket["role_id"] == 0
             department = Department.find(ticket["department_id"])
-            users = []
             department.roles.each do |role|
-              users << role.users
+              assign_ticket_to_users(role.users,@ticket)
             end
-            assign_ticket_to_department_users(users,@ticket)
+          elsif ticket["user_id"].include? 0
+            assign_ticket_to_users(Role.find(ticket["role_id"]).users,@ticket)
           else
             ticket["user_id"].each do |user|
               user = User.find(user)
-              user.assigned_tickets << @ticket
+              if user != current_user
+                user.assigned_tickets << @ticket
+              end
             end
           end
           @ticket.set_statuses
@@ -73,7 +75,6 @@ class Api::V1::TicketsController < ApplicationController
                   active: true
               }
           )
-
     end
     render :json => @ticket
   end

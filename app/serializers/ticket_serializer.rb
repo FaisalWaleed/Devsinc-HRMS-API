@@ -8,12 +8,23 @@ class TicketSerializer < ActiveModel::Serializer
 
   def overall_status
     if object.user_id == current_user.id
+      overall_status = {
+          open: [],
+          closed: [],
+          completed: []
+      }
+
       object.ticket_user.each do |ticket_user|
-        if ticket_user.ticket_status.active.status == "In Progress" || ticket_user.ticket_status.active.status == "Open"
-          return "In Progress"
+        if(ticket_user.ticket_status.active.status == "Open")
+          overall_status[:open].push(User.find(ticket_user.user_id).name)
+        elsif(ticket_user.ticket_status.active.status == "Closed")
+          overall_status[:closed].push(User.find(ticket_user.user_id).name)
+        elsif(ticket_user.ticket_status.active.status == "Completed")
+          overall_status[:completed].push(User.find(ticket_user.user_id).name)
         end
       end
-      return "Closed"
+
+      overall_status
     else
       nil
     end

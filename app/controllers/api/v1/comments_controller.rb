@@ -5,15 +5,13 @@ class Api::V1::CommentsController < ApplicationController
   # before_action :authenticate_user!
 
   def index
-    comments = {
-        ticket_id: params[:ticket_id],
-        comments: ActiveModel::SerializableResource.new(@ticket.comments)
-    }
-    render :json => comments
+    render :json => @ticket.comments
   end
 
   def create
-
+    params = comment_params.merge(user_id: current_user.id)
+    @comment = Comment.create(params)
+    render :json => @comment
   end
 
   def update

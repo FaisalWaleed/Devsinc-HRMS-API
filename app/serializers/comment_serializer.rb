@@ -6,17 +6,17 @@ class CommentSerializer < ActiveModel::Serializer
   end
 
   def role
-    Role.find(object.ticket.role_id).title
+    current_user.roles.first.title
   end
 
   def department
-    Role.find(object.ticket.role_id).department.name
+    current_user.roles.first.department.name
   end
 
   def created_at
     time_ago_in_words(object.created_at) << " ago"
   end
 
-  attributes :comment,:created_at,:username,:role,:department
+  attributes :comment,:created_at,:username,:role,:department,:ticket_id
 
 end

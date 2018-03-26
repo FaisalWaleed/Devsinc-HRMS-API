@@ -32,14 +32,17 @@ module TicketsHelper
 
   def assign_ticket_to_all_users ticket
       User.all.each do |user|
-        user.assigned_tickets << ticket
+        if user != current_user
+          user.assigned_tickets << ticket
+        end
     end
   end
 
-  def assign_ticket_to_department_users( users, ticket )
-    #   SELECT user_roles.user_id FROM roles JOIN user_roles ON user_roles.role_id=roles.id WHERE roles.department_id = 1
+  def assign_ticket_to_users( users, ticket )
     users.each do |user|
-      user.assigned_tickets << ticket
+      if user != current_user
+        user.assigned_tickets << ticket
+      end
     end
   end
 
