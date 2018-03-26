@@ -1,6 +1,6 @@
 class Api::V1::TicketsController < ApplicationController
   include TicketsHelper
-  before_action :set_ticket, only: [:update,:destroy]
+  before_action :set_ticket, only: [:update,:destroy,:statuses]
   # before_action :authenticate_user!
 
   def index
@@ -46,7 +46,6 @@ class Api::V1::TicketsController < ApplicationController
         end
       end
     end
-
     render :json => {reached: "reached here"}
   end
 
@@ -98,17 +97,18 @@ class Api::V1::TicketsController < ApplicationController
               :role_name => role.title,
               :users => role.users.select(:id,:name)
           }
-
     end
-
     render :json => options
+  end
 
+  def statuses
+    render :json => @ticket.ticket_user
   end
 
   private
 
   def set_ticket
-    @ticket = Ticket.find(ticket_params[:id])
+    @ticket = Ticket.find(params[:ticket_id])
   end
 
   def ticket_params

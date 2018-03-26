@@ -6,11 +6,11 @@ class CommentSerializer < ActiveModel::Serializer
   end
 
   def role
-    current_user.roles.first.title
+    User.find(object.user_id).roles.first.title
   end
 
   def department
-    current_user.roles.first.department.name
+    User.find(object.user_id).roles.first.department.name
   end
 
   def created_at

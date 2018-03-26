@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       end
       resources :tickets do
         resources :comments
+        get :statuses
         get :assigned, on: :collection
         get :ticket_option, on: :collection
       end
