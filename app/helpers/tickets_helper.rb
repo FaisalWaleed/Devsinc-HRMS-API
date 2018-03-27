@@ -31,10 +31,10 @@ module TicketsHelper
   end
 
   def assign_ticket_to_all_users ticket
-      User.all.each do |user|
-        if user != current_user
-          user.assigned_tickets << ticket
-        end
+    User.all.each do |user|
+      if user != current_user
+        user.assigned_tickets << ticket
+      end
     end
   end
 
@@ -46,4 +46,32 @@ module TicketsHelper
     end
   end
 
+  def change_ticket_status_for_all ( ticket, status )
+    ticket.ticket_user.each do |ticket_user|
+      ticket_user.ticket_status.active.update_attributes({active: false})
+      ticket_user.ticket_status <<
+          TicketStatus.create(
+              {
+                  ticket_user_id: ticket_user.id,
+                  status: status,
+                  active: true
+              }
+          )
+    end
+  end
+
+  def change_ticket_status_for_user ( ticket, userid, status, ticket_user = nil )
+    unless ticket_user
+      ticket_user = ticket.ticket_user.find_by(user_id: userid)
+    end
+    ticket_user.ticket_status.active.update_attributes({active: false})
+    ticket_user.ticket_status <<
+        TicketStatus.create(
+            {
+                ticket_user_id: ticket_user.id,
+                status: status,
+                active: true
+            }
+        )
+  end
 end

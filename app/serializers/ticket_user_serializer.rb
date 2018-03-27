@@ -13,6 +13,6 @@ class TicketUserSerializer < ActiveModel::Serializer
     User.find(object.user_id).name
   end
 
-  attributes :ticket_id,:user_id,:username,:status,:created_at
+  attributes :id,:ticket_id,:username,:status,:created_at
 
 end

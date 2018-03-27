@@ -1,6 +1,6 @@
 class Api::V1::TicketsController < ApplicationController
   include TicketsHelper
-  before_action :set_ticket, only: [:update,:destroy,:statuses]
+  before_action :set_ticket, only: [:update,:destroy]
   # before_action :authenticate_user!
 
   def index
@@ -52,28 +52,16 @@ class Api::V1::TicketsController < ApplicationController
   def update
     status = ticket_params[:status]
     if @ticket.user_id == current_user.id
-      @ticket.ticket_user.each do |ticket_user|
-        ticket_user.ticket_status.active.update_attributes({active: false})
-        ticket_user.ticket_status <<
-            TicketStatus.create(
-                {
-                    ticket_user_id: ticket_user.id,
-                    status: status,
-                    active: true
-                }
-            )
+      if ticket_params[:ticket_user_id]
+        ticket_user = TicketUser.find(ticket_params[:ticket_user_id])
+        if ticket_user.ticket.user_id == current_user.id
+          change_ticket_status_for_user(@ticket, nil , status, ticket_user)
+        end
+      else
+        change_ticket_status_for_all(@ticket,status)
       end
     else
-      ticket_user = @ticket.ticket_user.find_by(user_id: current_user.id)
-      ticket_user.ticket_status.active.update_attributes({active: false})
-      ticket_user.ticket_status <<
-          TicketStatus.create(
-              {
-                  ticket_user_id: ticket_user.id,
-                  status: status,
-                  active: true
-              }
-          )
+      change_ticket_status_for_user(@ticket, current_user.id, status)
     end
     render :json => @ticket
   end
@@ -102,17 +90,18 @@ class Api::V1::TicketsController < ApplicationController
   end
 
   def statuses
+    @ticket = Ticket.find(params[:ticket_id])
     render :json => @ticket.ticket_user
   end
 
   private
 
   def set_ticket
-    @ticket = Ticket.find(params[:ticket_id])
+    @ticket = Ticket.find(params[:id])
   end
 
   def ticket_params
-    params.require(:ticket).permit(:id,:user_id,:title,:description,:status,:due_date)
+    params.require(:ticket).permit(:id,:user_id,:title,:description,:status,:due_date,:ticket_user_id)
   end
 
 end
