@@ -13,7 +13,6 @@ class TicketSerializer < ActiveModel::Serializer
           closed: [],
           completed: []
       }
-
       object.ticket_user.each do |ticket_user|
         if(ticket_user.ticket_status.active.status == "Open")
           overall_status[:open].push(User.find(ticket_user.user_id).name)
@@ -23,7 +22,6 @@ class TicketSerializer < ActiveModel::Serializer
           overall_status[:completed].push(User.find(ticket_user.user_id).name)
         end
       end
-
       overall_status
     else
       nil

@@ -24,8 +24,8 @@ module TicketsHelper
     ticket_options.select { |option|
       (!option.empty?) &&
           (
-          (deps_with_all_roles.include?(option["department_id"]) && option["role_id"] === 0) ||
-              (!deps_with_all_roles.include?(option["department_id"]) && option["role_id"] != 0)
+            (deps_with_all_roles.include?(option["department_id"]) && option["role_id"] === 0) ||
+            (!deps_with_all_roles.include?(option["department_id"]) && option["role_id"] != 0)
           )
     }
   end

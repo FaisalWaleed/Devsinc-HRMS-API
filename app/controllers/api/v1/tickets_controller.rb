@@ -22,31 +22,29 @@ class Api::V1::TicketsController < ApplicationController
       @ticket.set_statuses
     else
       refined_ticket_options = refine_ticket_options params[:ticket][:ticket_options]
-      refined_ticket_options.each do |ticket|
+      refined_ticket_options.each do |ticket_option|
         params = ticket_params
-        params = params.merge(user_id: current_user.id,department_id: ticket["department_id"], role_id: ticket["role_id"])
+        params = params.merge(user_id: current_user.id,department_id: ticket_option["department_id"], role_id: ticket_option["role_id"])
         @ticket = Ticket.create(params)
-        if @ticket
-          if ticket["role_id"] == 0
-            department = Department.find(ticket["department_id"])
-            department.roles.each do |role|
-              assign_ticket_to_users(role.users,@ticket)
-            end
-          elsif ticket["user_id"].include? 0
-            assign_ticket_to_users(Role.find(ticket["role_id"]).users,@ticket)
-          else
-            ticket["user_id"].each do |user|
-              user = User.find(user)
-              if user != current_user
-                user.assigned_tickets << @ticket
-              end
+        if ticket_option["role_id"] == 0
+          department = Department.find(ticket_option["department_id"])
+          department.roles.each do |role|
+            assign_ticket_to_users(role.users,@ticket)
+          end
+        elsif ticket_option["user_id"].include? 0
+          assign_ticket_to_users(Role.find(ticket_option["role_id"]).users,@ticket)
+        else
+          ticket_option["user_id"].each do |user|
+            user = User.find(user)
+            if user != current_user
+              user.assigned_tickets << @ticket
             end
           end
-          @ticket.set_statuses
         end
+        @ticket.set_statuses
       end
     end
-    render :json => {reached: "reached here"}
+    render :json => {success: "Successfully created Ticket"}
   end
 
   def update
@@ -64,15 +62,6 @@ class Api::V1::TicketsController < ApplicationController
       change_ticket_status_for_user(@ticket, current_user.id, status)
     end
     render :json => @ticket
-  end
-
-  def destroy
-    if Ticket.find(params[:id]).destroy
-      render status: 200, json: {
-          userId: params[:id],
-          message: "Successfully deleted ticket"
-      }
-    end
   end
 
   def ticket_option

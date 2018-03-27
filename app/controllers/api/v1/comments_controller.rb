@@ -1,6 +1,5 @@
 class Api::V1::CommentsController < ApplicationController
 
-  before_action :set_comment, only: [:update,:destroy]
   before_action :set_ticket
   # before_action :authenticate_user!
 
@@ -14,22 +13,10 @@ class Api::V1::CommentsController < ApplicationController
     render :json => @comment
   end
 
-  def update
-
-  end
-
-  def destroy
-
-  end
-
   private
 
   def set_ticket
     @ticket = Ticket.find(params[:ticket_id])
-  end
-
-  def set_comment
-    @comment = Comment.find(comment_params[:id])
   end
 
   def comment_params
