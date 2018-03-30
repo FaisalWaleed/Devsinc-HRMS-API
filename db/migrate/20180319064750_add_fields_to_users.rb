@@ -11,5 +11,6 @@ class AddFieldsToUsers < ActiveRecord::Migration[5.1]
     add_column :users, :bank_account_number, :string
     add_column :users, :employment_history, :jsonb
     add_column :users, :performance_evaluation, :jsonb
+    add_column :users, :reporting_to, :integer
   end
 end

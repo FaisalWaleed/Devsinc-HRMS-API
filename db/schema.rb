@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 20180321124243) do
     t.string "bank_account_number"
     t.jsonb "employment_history"
     t.jsonb "performance_evaluation"
+    t.integer "reporting_to"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

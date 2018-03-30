@@ -1,5 +1,5 @@
 class Api::V1::Admin::UsersController < ApplicationController
-  before_action :set_user, only: [:update,:destroy]
+  before_action :set_user, only: [:update, :destroy, :show]
 
   def index
     render :json => User.all
@@ -19,6 +19,10 @@ class Api::V1::Admin::UsersController < ApplicationController
     end
   end
 
+  def show
+    render json: @user
+  end
+
   private
 
   def set_user
@@ -26,7 +30,26 @@ class Api::V1::Admin::UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:id,:name,:email,:username,:image,:company_id)
+    params.require(:user).permit(
+      :id,
+      :email,
+      :company_id,
+      :username, 
+      :name, 
+      :contact_number, 
+      :secondary_contact_number,
+      :emergency_contact_person_name,
+      :emergency_contact_person_number,
+      :emergency_contact_person_relation,
+      :dob,
+      :permanent_address,
+      :temporary_address,
+      :bank_account_number,
+      :performance_evaluation,
+      :image,
+      :reporting_to,
+      :employment_history => [:role , :from, :to],
+      )
   end
 
 end
