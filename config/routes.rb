@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   namespace :api, except: [:new, :edit], defaults: { format: 'json' } do
     namespace :v1 do
       namespace :admin do
-        resources :roles
+        resources :roles do 
+          get :assignable_users
+          post :add_users
+          post :remove_user
+        end
         resources :departments
         resources :users
       end
