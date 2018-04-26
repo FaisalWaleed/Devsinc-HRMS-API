@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180321124243) do
+ActiveRecord::Schema.define(version: 20180426131109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,27 @@ ActiveRecord::Schema.define(version: 20180321124243) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_departments_on_name"
+  end
+
+  create_table "leave_statuses", force: :cascade do |t|
+    t.bigint "leave_id"
+    t.string "status"
+    t.boolean "active"
+    t.integer "changed_by_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["leave_id"], name: "index_leave_statuses_on_leave_id"
+  end
+
+  create_table "leaves", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "leave_type"
+    t.text "reason"
+    t.date "start_date"
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_leaves_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -148,6 +169,8 @@ ActiveRecord::Schema.define(version: 20180321124243) do
   add_foreign_key "comments", "users"
   add_foreign_key "company_departments", "companies"
   add_foreign_key "company_departments", "departments"
+  add_foreign_key "leave_statuses", "leaves", column: "leave_id"
+  add_foreign_key "leaves", "users"
   add_foreign_key "ticket_statuses", "ticket_users"
   add_foreign_key "ticket_users", "tickets"
   add_foreign_key "ticket_users", "users"
