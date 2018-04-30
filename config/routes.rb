@@ -11,9 +11,12 @@ Rails.application.routes.draw do
       resources :tickets do
         resources :comments
         get :statuses
-        get :assigned, on: :collection
-        get :ticket_option, on: :collection
+        collection do
+          get :assigned
+          get :ticket_option
+        end
       end
+      resources :leaves, only: [:create,:index]
 
     end
   end
