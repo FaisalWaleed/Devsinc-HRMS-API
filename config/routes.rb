@@ -16,8 +16,7 @@ Rails.application.routes.draw do
           get :ticket_option
         end
       end
-      resources :leaves, only: [:create,:index]
-
+      
       resources :leaves, only: [:create,:index]
 
     end

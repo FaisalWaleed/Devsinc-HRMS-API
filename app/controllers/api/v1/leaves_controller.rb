@@ -6,6 +6,10 @@ class Api::V1::LeavesController < ApplicationController
     render :json => current_user.leaves
   end
 
+  def leave_approvels
+    render :json => Leave.leave_approvels(current_user)
+  end
+
   def create
     params = leave_params.merge(user_id: current_user.id)
     @leave = Leave.create(params)

@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(version: 20180426131109) do
   add_foreign_key "comments", "users"
   add_foreign_key "company_departments", "companies"
   add_foreign_key "company_departments", "departments"
-  add_foreign_key "leave_statuses", "leaves", column: "leave_id"
+  add_foreign_key "leave_statuses", "leaves"
   add_foreign_key "leaves", "users"
   add_foreign_key "ticket_statuses", "ticket_users"
   add_foreign_key "ticket_users", "tickets"
