@@ -4,6 +4,10 @@ class LeaveSerializer < ActiveModel::Serializer
     object.leave_statuses.last.status rescue nil
   end
 
-  attributes :id,:leave_type,:reason,:start_date,:end_date,:status
+  def username
+    object.user.name
+  end
+
+  attributes :id,:username,:leave_type,:reason,:start_date,:end_date,:status
 
 end
