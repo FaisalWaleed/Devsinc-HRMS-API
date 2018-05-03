@@ -19,6 +19,8 @@ Rails.application.routes.draw do
       
       resources :leaves, only: [:create,:index]
 
+      resources :leave_statuses, only: [:create, :index]
+
     end
   end
 end

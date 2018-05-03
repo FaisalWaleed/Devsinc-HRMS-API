@@ -6,8 +6,8 @@ class Api::V1::LeavesController < ApplicationController
     render :json => current_user.leaves
   end
 
-  def leave_approvels
-    render :json => Leave.leave_approvels(current_user)
+  def leave_approvals
+    render :json => Leave.leave_approvals(current_user)
   end
 
   def create

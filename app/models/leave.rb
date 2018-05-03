@@ -6,13 +6,18 @@ class Leave < ApplicationRecord
 
   private
 
-  scope :leave_approvels, ->(user) {
+  scope :leave_approvals, ->(user) {
     self.joins(:user).where("users.reporting_to= ?" , user.id)
   }
 
 
   def set_leave_status
-    LeaveStatus.create({leave_id: self.id, status: "pending", active: true, changed_by_user_id: self.user.id })
+    LeaveStatus.create({leave_id: self.id, status: "pending", active: true })
+  end
+
+
+  def HR_Leaves
+    Leave.joins(:leave_statuses).where.not("leave_statuses.status='pending' OR leave_statuses.status='Approved'")
   end
 
 end
