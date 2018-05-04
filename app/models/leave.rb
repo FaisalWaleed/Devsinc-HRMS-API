@@ -20,7 +20,7 @@ class Leave < ApplicationRecord
     Leave.joins(:leave_statuses).where.not("leave_statuses.status='pending' OR leave_statuses.status='Approved'")
   end
 
-  def user_leaves_history user_id
+  def self.user_leaves_history user_id
     User.find(user_id).leaves
   end
 
