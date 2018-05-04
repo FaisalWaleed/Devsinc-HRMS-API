@@ -1,10 +1,10 @@
 class Api::V1::LeaveStatusesController < ApplicationController
 
   def create
-
     params = leave_status_params.merge(user_id: current_user.id)
     params[:status] = leave_status(leave_status_params[:leave_id], leave_status_params[:status])
     @leave_status = LeaveStatus.create!(params)
+    render :json => @leave_status
   end
 
   private
