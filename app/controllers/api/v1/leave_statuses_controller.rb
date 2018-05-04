@@ -7,17 +7,18 @@ class Api::V1::LeaveStatusesController < ApplicationController
     @leave_status = LeaveStatus.create!(params)
   end
 
+  private
+
+  def leave_status leave_id, status
+    leave = Leave.find(leave_id)
+    if leave.user.reporting_to == current_user.id
+      return status + " by Reporting to"
+    else
+      return status + " by HR"
+    end
+  end
+
   def leave_status_params
     params.require(:leave_status).permit(:leave_id, :status, :user_id, :comment)
   end
-
-  private
-    def leave_status leave_id, status
-      leave = Leave.find(leave_id)
-      if leave.user.reporting_to == current_user.id
-        return status + " by Reporting to"
-      else
-        return status + " by HR"
-      end
-    end
 end
