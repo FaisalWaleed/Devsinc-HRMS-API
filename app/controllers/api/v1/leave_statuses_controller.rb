@@ -7,6 +7,10 @@ class Api::V1::LeaveStatusesController < ApplicationController
     render :json => @leave_status
   end
 
+  def leave_statuses
+    Leave.find(params[:leave_id]).leave_statuses
+  end
+
   private
 
   def leave_status leave_id, status

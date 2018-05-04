@@ -24,4 +24,5 @@ class Leave < ApplicationRecord
     User.find(user_id).leaves
   end
 
+
 end
