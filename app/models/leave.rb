@@ -12,7 +12,7 @@ class Leave < ApplicationRecord
 
 
   def set_leave_status
-    LeaveStatus.create({leave_id: self.id, status: "pending", active: true })
+    LeaveStatus.create({leave_id: self.id, status: "pending" })
   end
 
 
