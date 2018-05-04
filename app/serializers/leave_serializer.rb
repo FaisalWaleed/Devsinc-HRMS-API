@@ -8,6 +8,6 @@ class LeaveSerializer < ActiveModel::Serializer
     object.user.name
   end
 
-  attributes :id,:username,:leave_type,:reason,:start_date,:end_date,:status
+  attributes :id,:username,:leave_type,:user_id,:reason,:start_date,:end_date,:status
 
 end

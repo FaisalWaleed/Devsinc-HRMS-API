@@ -17,9 +17,19 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :leaves, only: [:create,:index]
 
-      resources :leave_statuses, only: [:create, :index]
+      resources :leaves, only: [:create, :index] do
+        collection do
+          get :leave_approvals
+          get :user_leaves_history
+        end
+      end
+
+      resources :leave_statuses, only: [:create, :index] do
+        collection do
+
+        end
+      end
 
     end
   end

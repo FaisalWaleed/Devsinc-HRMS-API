@@ -16,6 +16,10 @@ class Api::V1::LeavesController < ApplicationController
     render :json => @leave
   end
 
+  def user_leaves_history
+    Leave.user_leaves_history(params[:user_id])
+  end
+
   private
 
   def set_leave
