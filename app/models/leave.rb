@@ -12,11 +12,11 @@ class Leave < ApplicationRecord
 
 
   scope :this_year, -> {
-    self.where("leaves.start_date > ?" , Time.now.beginning_of_year)
+    self.joins(:leave_statuses).where("leaves.start_date > ? AND leave_statuses.status = ? " , Time.now.beginning_of_year, "approved by HR")
   }
 
   scope :this_month, -> {
-    self.where("leaves.start_date > ? AND start_date < ?" , Time.now.beginning_of_month, Time.now.end_of_month)
+    self.joins(:leave_statuses).where("leaves.start_date > ? AND start_date < ? AND leave_statuses.status = ?" , Time.now.beginning_of_month, Time.now.end_of_month, "approved by HR")
   }
 
   after_create :set_leave_status

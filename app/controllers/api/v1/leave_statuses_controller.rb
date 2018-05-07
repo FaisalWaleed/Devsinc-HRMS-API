@@ -8,7 +8,11 @@ class Api::V1::LeaveStatusesController < ApplicationController
   end
 
   def index
-    Leave.find(params[:leave_id]).leave_statuses
+    render :json =>
+               {
+                   leave_id: params[:leave_id],
+                   lifecycle: Leave.find(params[:leave_id]).leave_statuses
+               }
   end
 
   private
