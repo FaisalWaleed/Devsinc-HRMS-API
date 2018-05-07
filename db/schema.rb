@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180503082731) do
+ActiveRecord::Schema.define(version: 20180507073541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 20180503082731) do
     t.jsonb "employment_history"
     t.jsonb "performance_evaluation"
     t.integer "reporting_to"
+    t.integer "leaves_quota", default: 14
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
