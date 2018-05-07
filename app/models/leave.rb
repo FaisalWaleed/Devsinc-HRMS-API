@@ -1,6 +1,7 @@
 class Leave < ApplicationRecord
   belongs_to :user
-  has_many :leave_statuses
+  has_many :leave_statuses , dependent: :destroy
+
 
   after_create :set_leave_status
 
@@ -21,8 +22,8 @@ class Leave < ApplicationRecord
 
   after_create :set_leave_status
 
-  def hr_leaves
-    Leave.joins(:leave_statuses).where.not("leave_statuses.status='pending' OR leave_statuses.status='Approved'")
+  def self.hr_leaves
+    Leave.joins(:leave_statuses).where.not("leave_statuses.status='pending' OR leave_statuses.status='rejected by Reporting_to'")
   end
 
   private

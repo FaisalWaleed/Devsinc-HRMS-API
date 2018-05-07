@@ -7,7 +7,12 @@ class Api::V1::LeavesController < ApplicationController
   end
 
   def leave_approvals
-    render :json => Leave.leave_approvals(current_user)
+    leaves = Leave.leave_approvals(current_user)
+    # if current_user.id == 2
+    #   hr_leaves = Leave.hr_leaves
+    #   leaves += leaves + hr_leaves
+    # end
+    render :json => (leaves.uniq)
   end
 
   def create
