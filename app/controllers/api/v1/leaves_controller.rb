@@ -1,6 +1,6 @@
 class Api::V1::LeavesController < ApplicationController
-
   before_action :authenticate_user!
+  include LeavesHelper
 
   def index
     render :json => current_user.leaves
@@ -17,7 +17,13 @@ class Api::V1::LeavesController < ApplicationController
   end
 
   def user_leaves_history
-    Leave.user_leaves_history(params[:user_id])
+    user = User.find(params[:user_id])
+    render :json =>
+               {
+                   user_id: user.id,
+                   year: get_year_leaves(user),
+                   month: get_month_leaves(user)
+               }
   end
 
   private

@@ -11,18 +11,24 @@ class Leave < ApplicationRecord
   }
 
 
-  def set_leave_status
-    LeaveStatus.create({leave_id: self.id, status: "pending", user_id: self.user.id })
-  end
+  scope :this_year, -> {
+    self.where("leaves.start_date > ?" , Time.now.beginning_of_year)
+  }
 
+  scope :this_month, -> {
+    self.where("leaves.start_date > ? AND start_date < ?" , Time.now.beginning_of_month, Time.now.end_of_month)
+  }
 
-  def HR_Leaves
+  after_create :set_leave_status
+
+  def hr_leaves
     Leave.joins(:leave_statuses).where.not("leave_statuses.status='pending' OR leave_statuses.status='Approved'")
   end
 
-  def self.user_leaves_history user_id
-    User.find(user_id).leaves
-  end
+  private
 
+  def set_leave_status
+    LeaveStatus.create({leave_id: self.id, status: "pending", user_id: self.user.id })
+  end
 
 end
