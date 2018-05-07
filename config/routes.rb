@@ -25,11 +25,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :leave_statuses, only: [:create, :index] do
-        collection do
-          get :leave_statuses
-        end
-      end
+      resources :leave_statuses, only: [:create, :index]
 
     end
   end
