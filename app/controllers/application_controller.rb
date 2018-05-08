@@ -2,15 +2,16 @@ class ApplicationController < ActionController::API
   before_action :configure_permitted_parameters, if: :devise_controller?
   include DeviseTokenAuth::Concerns::SetUserByToken
 
+  before_action :is_authorized?, except: [:create]
   protected
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [
       :company_id,
-      :username, 
-      :name, 
-      :department_id, 
-      :contact_number, 
+      :username,
+      :name,
+      :department_id,
+      :contact_number,
       :secondary_contact_number,
       :emergency_contact_person_name,
       :emergency_contact_person_number,
@@ -25,4 +26,25 @@ class ApplicationController < ActionController::API
       ] )
   end
 
+  def get_controller_action
+    controller_name+'_'+action_name
+  end
+
+  def is_authorized?
+    request = get_controller_action
+    permissions = get_user_permissions
+    puts '-------------------------'
+    puts request
+    puts permissions.inspect
+    unless permissions.include? (request.to_s)
+      render json: {
+        error: "You aren't authorized for this action",
+        status: 401
+      }, status: 401
+    end
+  end
+
+  def get_user_permissions
+    Permission.get_roles_permission(current_user.roles.pluck(:id))
+  end
 end

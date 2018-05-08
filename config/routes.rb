@@ -16,7 +16,7 @@ Rails.application.routes.draw do
           get :ticket_option
         end
       end
-      
+
 
       resources :leaves, only: [:create, :index] do
         collection do
@@ -26,6 +26,8 @@ Rails.application.routes.draw do
       end
 
       resources :leave_statuses, only: [:create, :index]
+      resources :permissions, only: [:index]
+
 
     end
   end

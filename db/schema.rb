@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180507073541) do
+ActiveRecord::Schema.define(version: 20180508111113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,22 @@ ActiveRecord::Schema.define(version: 20180507073541) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_leaves_on_user_id"
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "role_permissions", force: :cascade do |t|
+    t.bigint "role_id"
+    t.bigint "permission_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["permission_id"], name: "index_role_permissions_on_permission_id"
+    t.index ["role_id"], name: "index_role_permissions_on_role_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -172,6 +188,8 @@ ActiveRecord::Schema.define(version: 20180507073541) do
   add_foreign_key "company_departments", "departments"
   add_foreign_key "leave_statuses", "leaves"
   add_foreign_key "leaves", "users"
+  add_foreign_key "role_permissions", "permissions"
+  add_foreign_key "role_permissions", "roles"
   add_foreign_key "ticket_statuses", "ticket_users"
   add_foreign_key "ticket_users", "tickets"
   add_foreign_key "ticket_users", "users"
