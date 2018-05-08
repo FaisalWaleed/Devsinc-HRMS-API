@@ -3,6 +3,7 @@ class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
 
   before_action :is_authorized?
+
   protected
 
   def configure_permitted_parameters

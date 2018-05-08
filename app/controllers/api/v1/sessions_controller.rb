@@ -1,10 +1,10 @@
 class Api::V1::SessionsController < DeviseTokenAuth::SessionsController
-  skip_before_action :is_authorized?, only: [:create]
+  skip_before_action :is_authorized?, only: [:create,:new]
 
   # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  def new
+    super
+  end
 
   # POST /resource/sign_in
   def create
@@ -25,8 +25,7 @@ class Api::V1::SessionsController < DeviseTokenAuth::SessionsController
 
   protected
   def render_create_success
-    resource = @resource.as_json.merge({permissions: "Put User Permissions Here"})
-    render :json => resource
+    render :json => {data: @resource, permissions: "Put permissions here"}, :status => 200
   end
 
 
