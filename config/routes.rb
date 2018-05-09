@@ -12,6 +12,8 @@ Rails.application.routes.draw do
         resources :departments
         resources :users
       end
+
+
       resources :tickets do
         resources :comments
         get :statuses
@@ -20,7 +22,6 @@ Rails.application.routes.draw do
           get :ticket_option
         end
       end
-
 
       resources :leaves, only: [:create, :index] do
         collection do

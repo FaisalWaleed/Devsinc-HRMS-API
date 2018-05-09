@@ -34,9 +34,6 @@ class ApplicationController < ActionController::API
   def is_authorized?
     request = get_controller_action
     permissions = get_user_permissions
-    puts '-------------------------'
-    puts request
-    puts permissions.inspect
     unless permissions.include? (request.to_s)
       render json: {
         error: "You aren't authorized for this action",
