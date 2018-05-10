@@ -28,11 +28,13 @@ module Api
         end
 
         def allow_permission
-          RolePermission.find_or_create_by(role_id: role_params[:role_id], permission_id: role_params[:permission_id])
+          rp = RolePermission.find_or_create_by(role_id: role_params[:role_id], permission_id: role_params[:permission_id])
+          render :json => { group: rp.permission.group, permission_id: rp.permission_id, role_id: rp.role_id }
         end
 
         def revoke_permission
-          RolePermission.find_by(role_id: params[:role_id], permission_id: params[:permission_id]).delete
+          rp = RolePermission.find_by(role_id: role_params[:role_id], permission_id: role_params[:permission_id]).delete
+          render :json => { group: rp.permission.group, permission_id: rp.permission_id, role_id: rp.role_id }
         end
 
         private
