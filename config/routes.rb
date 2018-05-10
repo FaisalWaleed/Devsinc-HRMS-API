@@ -31,7 +31,11 @@ Rails.application.routes.draw do
       end
 
       resources :leave_statuses, only: [:create, :index]
-      resources :permissions, only: [:index]
+      resources :permissions, only: [:index] do
+        collection do
+          get :get_permissions_obj
+        end
+      end
 
 
     end
