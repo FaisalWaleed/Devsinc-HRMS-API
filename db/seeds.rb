@@ -118,3 +118,57 @@ Role.last.users << User.find(6)
 #   { title: 'salary', description: 'salary increase', status: 'assigned', reporter_id: 3, assignee_id: 5, user_role_id: 5 },
 #   { title: 'work', description: 'i need to know the work flow', status: 'open', reporter_id: 3, user_role_id: 5 }
 # ].map { |t| print '.'; Ticket.find_or_create_by(t) }
+
+
+Permission.create(name: "users_index", description: "Manage Users Index Page", group: "Users", display_name: "View all Users" )
+Permission.create(name: "users_destroy", description: "Destroy User", group: "Users" , display_name: "Delete User" )
+Permission.create(name: "registrations_create", description: "Create New User", group: "Users", display_name: "Create User" )
+Permission.create(name: "users_show", description: "View User Profile", group: "Users", display_name: "View Profile")
+
+
+Permission.create(name: "departments_index", description: "Departments Index Page", group: "Department", display_name: "View Departments")
+Permission.create(name: "departments_create", description: "Create New Department", group: "Department", display_name: "Create Department")
+
+
+############   Module RolesConrtroller Permissions
+
+Permission.create(name: "roles_index", description: "Roles Index Page", group: "Roles", display_name: "View Roles")
+Permission.create(name: "roles_create", description: "Create New Role", group: "Roles", display_name: "Create Role")
+Permission.create(name: "roles_edit", description: "Edit Role", group: "Roles", display_name: "Edit Role")
+Permission.create(name: "roles_update", description: "Update Role", group: "Roles", display_name: "Update Role")
+Permission.create(name: "roles_destroy", description: "Delete Role", group: "Roles", display_name: "Delete Role")
+Permission.create(name: "roles_show", description: "show Role", group: "Roles", display_name: "Show Role")
+
+
+############   Module TicketsController  Permissions
+
+
+Permission.create(name: "tickets_index", description: "Tickets Index Page", group: "Tickets", display_name: "View Tickets")
+Permission.create(name: "tickets_assigned", description: "Assigned Tickets", group: "Tickets", display_name: "Assigned Tickets")
+Permission.create(name: "tickets_create", description: "Create New Ticket", group: "Tickets", display_name: "Create Ticket")
+Permission.create(name: "tickets_update", description: "Update Ticket", group: "Tickets", display_name: "Update Tickets")
+Permission.create(name: "tickets_ticket_option", description: "Options For Tickets", group: "Tickets", display_name: "Add Ticket Options")
+Permission.create(name: "tickets_statuses", description: "Tickets Statuses", group: "Tickets" , display_name: "View Ticket Statuses")
+
+
+############   Leaves LeavesController Permissions
+
+
+Permission.create(name: "leaves_index", description: "Leaves Index Page", group: "Leaves", display_name: "My Leaves")
+Permission.create(name: "leaves_leave_approvals", description: "Leave Approvals", group: "Leaves", display_name: "Leave Approvals")
+Permission.create(name: "leaves_create", description: "Create New Leave", group: "Leaves", display_name: "Create new Leave")
+Permission.create(name: "leaves_user_leaves_history", description: "User Leave History", group: "Leaves", display_name: "User Leave History")
+
+
+############   Leaves LeavesStatusesController Permissions
+
+Permission.create(name: "leave_statuses_create", description: "Create Leave Status", group: "Leaves", display_name: "Create Leave Status")
+Permission.create(name: "leave_statuses_index", description: "Leave Life-cycle", group: "Leaves" , display_name: "Leave Life Cycle")
+
+
+
+
+
+
+
+

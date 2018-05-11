@@ -1,5 +1,5 @@
 class Api::V1::SessionsController < DeviseTokenAuth::SessionsController
-  # skip_before_action :is_authorized?, only: [:create,:new]
+  skip_before_action :is_authorized?, only: [:create,:new]
 
   # GET /resource/sign_in
   def new
