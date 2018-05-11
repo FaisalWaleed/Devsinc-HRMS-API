@@ -41,12 +41,12 @@ departments = [
 print 'creating users '
 pass = { password: 'pass1234', password_confirmation: 'pass1234' }
 users = [
-    { name: 'Devsinc', email: 'admin@devsinc.com', company_id: companies[0].id },
-    { name: 'user2', email: 'user2@devsinc.com', company_id: companies[0].id },
-    { name: 'user3', email: 'user3@devsinc.com', company_id: companies[0].id },
-    { name: 'user4', email: 'user4@devsinc.com', company_id: companies[0].id },
-    { name: 'user5', email: 'user5@devsinc.com', company_id: companies[0].id },
-    { name: 'user6', email: 'user6@devsinc.com', company_id: companies[0].id }
+    { name: 'Jawad Firdous', email: 'admin@devsinc.com', company_id: companies[0].id },
+    { name: 'Faisal Waleed', email: 'faisal.waleed@devsinc.com', company_id: companies[0].id, reporting_to: 1 },
+    { name: 'Salman Ali', email: 'salman.ali@devsinc.com', company_id: companies[0].id ,reporting_to: 2},
+    { name: 'Usama Kamran', email: 'usama.kamran@devsinc.com', company_id: companies[0].id, reporting_to: 2},
+    { name: 'Aqib Butt', email: 'aqib.butt@devsinc.com', company_id: companies[0].id ,reporting_to: 2},
+    { name: 'Usman Asif', email: 'usman.asif@devsinc.com', company_id: companies[0].id ,reporting_to: 2 }
 ].map do |u|
   print '.'
   User.find_or_create_by!(u) { |u| u.assign_attributes(pass) }
@@ -56,7 +56,6 @@ Role.create(
     {
         title: 'Admin',
         department_id: 1
-
     }
 )
 
@@ -66,9 +65,8 @@ Role.last.users << User.find(2)
 
 Role.create(
     {
-        title: 'Manager',
+        title: 'Project Manager',
         department_id: 1
-
     }
 )
 
@@ -80,25 +78,11 @@ Role.create(
     {
         title: 'Accountant',
         department_id: 2
-
     }
 )
 
 Department.find(2).roles << Role.last
 Role.last.users << User.find(5)
-
-Role.create(
-    {
-        title: 'Super Man',
-        department_id: 2
-
-    }
-)
-
-Department.find(2).roles << Role.last
-Role.last.users << User.find(6)
-
-
 
 
 # print 'creating department users '
@@ -165,10 +149,9 @@ Permission.create(name: "leaves_user_leaves_history", description: "User Leave H
 Permission.create(name: "leave_statuses_create", description: "Create Leave Status", group: "Leaves", display_name: "Create Leave Status")
 Permission.create(name: "leave_statuses_index", description: "Leave Life-cycle", group: "Leaves" , display_name: "Leave Life Cycle")
 
+Permission.create(name: "roles_allow_permission", description: "Can allow Permission", group: "Permissions" , display_name: "Can allow Permission")
+Permission.create(name: "roles_revoke_permission", description: "Can revoke Permission", group: "Permissions" , display_name: "Can revoke Permission")
 
+Role.first.permissions << Permission.all
 
-
-
-
-
-
+User.all.update(tokens: nil)
