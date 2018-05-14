@@ -8,10 +8,10 @@ class Api::V1::LeavesController < ApplicationController
 
   def leave_approvals
     leaves = Leave.leave_approvals(current_user)
-    # if current_user.id == 2
-    #   hr_leaves = Leave.hr_leaves
-    #   leaves += leaves + hr_leaves
-    # end
+    if current_user.roles.pluck(:title).include?('Admin')
+      hr_leaves = Leave.hr_leaves
+      leaves += leaves + hr_leaves
+    end
     render :json => (leaves.uniq)
   end
 

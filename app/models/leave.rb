@@ -23,7 +23,7 @@ class Leave < ApplicationRecord
   after_create :set_leave_status
 
   def self.hr_leaves
-    Leave.joins(:leave_statuses).where.not("leave_statuses.status='pending' OR leave_statuses.status='rejected by Reporting_to'")
+    Leave.joins(:leave_statuses).where.not("leave_statuses.status='pending' OR leave_statuses.status='rejected by Reporting to'")
   end
 
   private

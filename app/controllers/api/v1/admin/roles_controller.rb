@@ -27,10 +27,20 @@ module Api
           render json: Role.find(params[:id]).destroy!
         end
 
+        def allow_permission
+          rp = RolePermission.find_or_create_by(role_id: role_params[:role_id], permission_id: role_params[:permission_id])
+          render :json => { group: rp.permission.group, permission_id: rp.permission_id, role_id: rp.role_id }
+        end
+
+        def revoke_permission
+          rp = RolePermission.find_by(role_id: role_params[:role_id], permission_id: role_params[:permission_id]).delete
+          render :json => { group: rp.permission.group, permission_id: rp.permission_id, role_id: rp.role_id }
+        end
+
         private
 
         def role_params
-          params.require(:role).permit(:id, :title, :description, :department_id)
+          params.require(:role).permit(:id, :title, :description, :department_id, :role_id, :permission_id)
         end
 
         def role
