@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :ticket_user
   has_many :assigned_tickets, through: :ticket_user, source: :ticket
   has_many :tickets
+  has_many :leaves
 
   after_create :send_welcome_email
 
