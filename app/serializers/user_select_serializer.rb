@@ -9,4 +9,5 @@ class UserSelectSerializer < ActiveModel::Serializer
     object.name
   end
 
+
 end

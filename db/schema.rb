@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180510084008) do
+ActiveRecord::Schema.define(version: 20180515110608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,7 +154,6 @@ ActiveRecord::Schema.define(version: 20180510084008) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
-    t.string "name"
     t.string "nickname"
     t.string "image"
     t.string "email"
@@ -175,7 +174,11 @@ ActiveRecord::Schema.define(version: 20180510084008) do
     t.jsonb "employment_history"
     t.jsonb "performance_evaluation"
     t.integer "reporting_to"
-    t.integer "leaves_quota", default: 14
+    t.string "first_name"
+    t.string "last_name"
+    t.date "join_date"
+    t.integer "buddy_id"
+    t.boolean "allow_password_change", default: false
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

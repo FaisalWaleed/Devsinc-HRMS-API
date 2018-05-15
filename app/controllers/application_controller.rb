@@ -9,9 +9,10 @@ class ApplicationController < ActionController::API
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [
       :company_id,
-      :username, 
-      :name, 
-      :contact_number, 
+      :username,
+      :first_name,
+      :last_name,
+      :contact_number,
       :secondary_contact_number,
       :emergency_contact_person_name,
       :emergency_contact_person_number,
