@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules.
   devise :database_authenticatable, :registerable,
           :recoverable, :rememberable, :trackable, :validatable,
-          :omniauthable, :confirmable
+          :omniauthable
 
   include DeviseTokenAuth::Concerns::User
 
@@ -23,8 +23,8 @@ class User < ActiveRecord::Base
   has_many :assigned_tickets, through: :ticket_user, source: :ticket
   has_many :tickets
   has_many :leaves
-  belongs_to  :buddy , class_name: "User", foreign_key: "buddy_id"
-  belongs_to  :reports_to , class_name: "User", foreign_key: "reporting_to"
+  # belongs_to  :buddy , class_name: "User", foreign_key: "buddy_id"
+  # belongs_to  :reports_to , class_name: "User", foreign_key: "reporting_to"
 
 
   after_create :send_welcome_email
