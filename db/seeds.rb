@@ -69,6 +69,7 @@ Permission.find_or_create_by(name: "users_update", description: "Update User", g
 Permission.find_or_create_by(name: "users_destroy", description: "Destroy User", group: "Users" , display_name: "Delete User" )
 Permission.find_or_create_by(name: "registrations_create", description: "Create New User", group: "Users", display_name: "Create User" )
 Permission.find_or_create_by(name: "users_show", description: "View User Profile", group: "Users", display_name: "View Profile")
+Permission.find_or_create_by(name: "users_create", description: "Create New User ", group: "Users", display_name: "Invite New User")
 
 
 ############   Module DepartmentsController Permissions
