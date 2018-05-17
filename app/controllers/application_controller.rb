@@ -4,6 +4,13 @@ class ApplicationController < ActionController::API
 
   before_action :is_authorized?
 
+  if Rails.env == 'production'
+    rescue_from ActionController::RoutingError, with: :unprocessable_entity
+    rescue_from ActiveRecord::RecordNotFound, with: :unprocessable_entity
+    rescue_from ActionController::UnknownController, with: :unprocessable_entity
+    rescue_from Exception, with: :unprocessable_entity
+  end
+
   rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
 
   protected
@@ -34,6 +41,7 @@ class ApplicationController < ActionController::API
       :join_date,
       :reporting_to,
       :buddy_id,
+      :title
       ] )
   end
 

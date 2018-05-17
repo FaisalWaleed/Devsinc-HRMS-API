@@ -63,7 +63,8 @@ class Api::V1::Admin::UsersController < ApplicationController
         :image,
         :join_date,
         :reporting_to,
-        :buddy_id
+        :buddy_id,
+        :title
     )
   end
 
