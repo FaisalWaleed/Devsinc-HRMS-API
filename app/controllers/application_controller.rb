@@ -4,7 +4,14 @@ class ApplicationController < ActionController::API
 
   before_action :is_authorized?
 
+  rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
+
   protected
+
+  def unprocessable_entity(ex)
+    # byebug
+    render json: { errors: ex.message }, status: :unprocessable_entity
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [
