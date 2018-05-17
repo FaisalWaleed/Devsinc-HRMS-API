@@ -241,7 +241,7 @@
 
 
                   <div style="line-height: 26px;">
-                    <%= link_to 'Go to Dashboard', user_confirmation_url(confirmation_token: @token), style: "color: #ffffff; text-decoration: none;" %>
+                  <%= link_to 'Go to Dashboard', user_confirmation_url(confirmation_token: @token ,redirect_url: 'http://localhost:3001/dashboard'.to_s), style: "color: #ffffff; text-decoration: none;" %>
                   </div>
                 </td>
               </tr>

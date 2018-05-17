@@ -13,10 +13,9 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   validates :join_date, presence: true
   validates :reporting_to, presence: true
-  validates :buddy_id, presence: true
-  validates :company_id, presence: true
+  # validates :company_id, presence: true
 
-  belongs_to :company
+  # belongs_to :company
   has_many :user_roles
   has_many :roles, through: :user_roles
   has_many :ticket_user

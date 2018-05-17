@@ -11,7 +11,9 @@ class Api::V1::Admin::UsersController < ApplicationController
     @user = User.new(params)
     if @user.save!
       @user.update(tokens: nil)
-
+      render json: @user
+    else
+      render json: "Error Occured"
     end
   end
 

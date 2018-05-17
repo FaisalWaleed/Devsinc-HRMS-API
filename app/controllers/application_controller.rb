@@ -23,7 +23,10 @@ class ApplicationController < ActionController::API
       :bank_account_number,
       :employment_history,
       :performance_evaluation,
-      :image
+      :image,
+      :join_date,
+      :reporting_to,
+      :buddy_id,
       ] )
   end
 

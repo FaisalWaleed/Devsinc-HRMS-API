@@ -26,13 +26,13 @@ departments = [
 print 'Creating Users'
 pass = { password: 'pass1234', password_confirmation: 'pass1234' }
 users = [
-    { first_name: 'Jawad',last_name: 'Ali', email: 'admin@devsinc.com', company_id: companies[0].id, reporting_to: 1, buddy_id: 1, join_date: Date.new },
-    { first_name: 'Jawad',last_name: 'Ali', email: 'jawad.firdous@devsinc.com', company_id: companies[0].id, reporting_to: 1, buddy_id: 1, join_date: Date.new},
-    { first_name: 'Faisal',last_name: 'Ali', email: 'faisal.waleed@devsinc.com', company_id: companies[0].id,reporting_to: 1, buddy_id: 1, join_date: Date.new },
-    { first_name: 'Salman',last_name: 'Ali', email: 'salman.ali@devsinc.com', company_id: companies[0].id , reporting_to: 1, buddy_id: 1, join_date: Date.new},
-    { first_name: 'Usama',last_name: 'Ali', email: 'usama.kamran@devsinc.com', company_id: companies[0].id,reporting_to: 2, buddy_id: 2, join_date: Date.new},
-    { first_name: 'Aqib',last_name: 'Ali', email: 'aqib.butt@devsinc.com', company_id: companies[0].id ,reporting_to: 2, buddy_id: 2, join_date: Date.new},
-    { first_name: 'Usman',last_name: 'Ali', email: 'usman.asif@devsinc.com', company_id: companies[0].id ,reporting_to: 1, buddy_id: 1, join_date: Date.new  }
+    { first_name: 'Jawad',last_name: 'Ali', email: 'admin@devsinc.com', company_id: companies[0].id, reporting_to: 1, buddy_id: 1, join_date: Date.new , confirmed_at: Time.now},
+    { first_name: 'Jawad',last_name: 'Ali', email: 'jawad.firdous@devsinc.com', company_id: companies[0].id, reporting_to: 1, buddy_id: 1, join_date: Date.new, confirmed_at: Time.now},
+    { first_name: 'Faisal',last_name: 'Ali', email: 'faisal.waleed@devsinc.com', company_id: companies[0].id,reporting_to: 1, buddy_id: 1, join_date: Date.new, confirmed_at: Time.now },
+    { first_name: 'Salman',last_name: 'Ali', email: 'salman.ali@devsinc.com', company_id: companies[0].id , reporting_to: 1, buddy_id: 1, join_date: Date.new, confirmed_at: Time.now},
+    { first_name: 'Usama',last_name: 'Ali', email: 'usama.kamran@devsinc.com', company_id: companies[0].id,reporting_to: 2, buddy_id: 2, join_date: Date.new, confirmed_at: Time.now},
+    { first_name: 'Aqib',last_name: 'Ali', email: 'aqib.butt@devsinc.com', company_id: companies[0].id ,reporting_to: 2, buddy_id: 2, join_date: Date.new, confirmed_at: Time.now},
+    { first_name: 'Usman',last_name: 'Ali', email: 'usman.asif@devsinc.com', company_id: companies[0].id ,reporting_to: 1, buddy_id: 1, join_date: Date.new , confirmed_at: Time.now }
 ].map do |u|
   print '.'
   User.find_or_create_by!(u) { |u| u.assign_attributes(pass) }

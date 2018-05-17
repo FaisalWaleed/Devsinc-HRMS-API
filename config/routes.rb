@@ -3,7 +3,9 @@ Rails.application.routes.draw do
       sessions: "api/v1/sessions",
       confirmations: "api/v1/confirmations",
       passwords: "api/v1/passwords",
-      token_validations: "api/v1/token_validations"
+      token_validations: "api/v1/token_validations",
+      registrations: "api/v1/registrations"
+
   }
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
