@@ -37,4 +37,8 @@ class User < ActiveRecord::Base
   def name
     self.first_name + self.last_name
   end
+
+  def is_future_joining?
+    self.join_date > Date.today
+  end
 end
