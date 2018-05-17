@@ -35,7 +35,11 @@ class User < ActiveRecord::Base
   end
 
   def name
-    self.first_name + self.last_name
+    self.first_name + " " + self.last_name
+  end
+
+  def reports_to
+    User.find(self.reporting_to)
   end
 
   def is_future_joining?
