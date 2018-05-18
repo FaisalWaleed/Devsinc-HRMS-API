@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
 
   after_create :send_welcome_email
 
+  mount_uploader :image, ImageUploader
+
 
 
   def send_welcome_email

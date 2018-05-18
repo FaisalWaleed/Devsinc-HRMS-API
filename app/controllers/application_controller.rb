@@ -41,7 +41,8 @@ class ApplicationController < ActionController::API
       :join_date,
       :reporting_to,
       :buddy_id,
-      :title
+      :title,
+      :image
       ] )
   end
 
