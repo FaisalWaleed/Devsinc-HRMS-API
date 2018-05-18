@@ -1,5 +1,5 @@
 class Api::V1::PasswordsController < DeviseTokenAuth::PasswordsController
-  skip_before_action :is_authorized?, only: [:create,:new,:edit]
+  skip_before_action :is_authorized?, only: [:create,:new,:edit,:update]
 
   # GET /resource/password/new
   # def new
