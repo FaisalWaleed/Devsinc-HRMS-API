@@ -10,14 +10,11 @@ class Api::V1::Admin::UsersController < ApplicationController
     params.merge!(password: "pass1234", company_id: 1)
     @user = User.new(params)
     @user.save!
+    @user.update(tokens: nil)
     unless @user.is_future_joining?
       @user.send_reset_password_instructions
     end
-    @user.update(tokens: nil)
     render json: @user
-    # else
-    #   render json: @user.errors.full_messages, status: 422
-    # end
   end
 
 
