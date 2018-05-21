@@ -18,7 +18,7 @@ Rails.application.configure do
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.seconds.to_i}"
+        'Cache-Control' => "public, max-age=#{2.days.seconds.to_i}"
     }
   else
     config.action_controller.perform_caching = false
@@ -46,13 +46,25 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   #Mail inbox settings
+
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :user_name => ENV["MAILTRAP_USERNAME"],
-      :password => ENV["MAILTRAP_PASSWORD"],
+      :user_name => 'ba64b9cbaece5d',
+      :password => '1f267d8fac28fd',
       :address => 'smtp.mailtrap.io',
       :domain => 'smtp.mailtrap.io',
-      :port => '2525',
+      :port => '25',
       :authentication => :cram_md5
   }
+
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #     :user_name => ENV["MAILTRAP_USERNAME"],
+  #     :password => ENV["MAILTRAP_PASSWORD"],
+  #     :address => 'smtp.mailtrap.io',
+  #     :domain => 'smtp.mailtrap.io',
+  #     :port => '2525',
+  #     :authentication => :cram_md5
+  # }
 end

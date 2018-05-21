@@ -29,6 +29,8 @@ gem 'devise_token_auth', '~> 0.1.43.beta1'
 gem 'omniauth'
 gem 'rack-cors'
 gem "active_model_serializers"
+gem 'whenever', require: false
+gem 'carrierwave'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

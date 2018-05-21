@@ -2,7 +2,7 @@ class CommentSerializer < ActiveModel::Serializer
   include ActionView::Helpers::DateHelper
 
   def username
-    object.user.name
+    object.user.first_name + object.user.last_name
   end
 
   def role

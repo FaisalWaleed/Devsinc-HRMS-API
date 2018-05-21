@@ -47,6 +47,7 @@ module Api
           role = Role.find(params[:role_id])
           role.user_roles.find_by(user_id: params[:user_id]).destroy
           render json: role
+        end
 
         def allow_permission
           rp = RolePermission.find_or_create_by(role_id: role_params[:role_id], permission_id: role_params[:permission_id])

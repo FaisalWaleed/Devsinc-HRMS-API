@@ -1,14 +1,18 @@
 Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: 'api/v1/auth', controllers: {
       sessions: "api/v1/sessions",
-      token_validations: "api/v1/token_validations"
+      confirmations: "api/v1/confirmations",
+      passwords: "api/v1/passwords",
+      token_validations: "api/v1/token_validations",
+      registrations: "api/v1/registrations"
+
   }
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api, except: [:new, :edit], defaults: { format: 'json' } do
     namespace :v1 do
       namespace :admin do
-        resources :roles do 
+        resources :roles do
           member do
             post :allow_permission
             post :revoke_permission
@@ -21,7 +25,7 @@ Rails.application.routes.draw do
         resources :users
       end
 
-      
+
       resources :tickets do
         resources :comments
         get :statuses

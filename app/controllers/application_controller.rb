@@ -4,14 +4,29 @@ class ApplicationController < ActionController::API
 
   before_action :is_authorized?
 
+  if Rails.env == 'production'
+    rescue_from ActionController::RoutingError, with: :unprocessable_entity
+    rescue_from ActiveRecord::RecordNotFound, with: :unprocessable_entity
+    rescue_from ActionController::UnknownController, with: :unprocessable_entity
+    rescue_from Exception, with: :unprocessable_entity
+  end
+
+  rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
+
   protected
+
+  def unprocessable_entity(ex)
+    # byebug
+    render json: { errors: ex.message }, status: :unprocessable_entity
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [
       :company_id,
-      :username, 
-      :name, 
-      :contact_number, 
+      :username,
+      :first_name,
+      :last_name,
+      :contact_number,
       :secondary_contact_number,
       :emergency_contact_person_name,
       :emergency_contact_person_number,
@@ -22,6 +37,11 @@ class ApplicationController < ActionController::API
       :bank_account_number,
       :employment_history,
       :performance_evaluation,
+      :image,
+      :join_date,
+      :reporting_to,
+      :buddy_id,
+      :title,
       :image
       ] )
   end
