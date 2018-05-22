@@ -28,6 +28,10 @@ class TicketSerializer < ActiveModel::Serializer
     end
   end
 
-  attributes :id,:title,:description,:due_date,:status,:overall_status
+  def created_by
+    object.user.name
+  end
+
+  attributes :id,:title,:description,:due_date,:status,:overall_status, :created_by
 
 end
