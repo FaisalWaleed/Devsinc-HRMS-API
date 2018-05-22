@@ -28,7 +28,7 @@ class Api::V1::LeavesController < ApplicationController
                    user_id: user.id,
                    year: get_year_leaves(user),
                    month: get_month_leaves(user),
-                   quota: user.leaves_quota
+                   quota: 14
                }
   end
 
