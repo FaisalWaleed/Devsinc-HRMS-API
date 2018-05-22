@@ -124,3 +124,11 @@ Role.find_by(title: 'Account Owner').permissions << Permission.all
 
 User.first.roles << Role.find_by(title: 'Account Owner')
 User.all.update(tokens: nil)
+
+
+roles = ["New Hiring","Advanced","Account Owner"]
+
+roles.each do |role|
+  Role.find_or_create_by(title: role, department_id: 1)
+end
+
