@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   # belongs_to  :reports_to , class_name: "User", foreign_key: "reporting_to"
 
 
-  after_create :send_welcome_email
+  # after_create :send_welcome_email
 
   mount_uploader :image, ImageUploader
 
