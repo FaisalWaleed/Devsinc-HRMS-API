@@ -38,31 +38,6 @@ users = [
   User.find_or_create_by!(u) { |u| u.assign_attributes(pass) }
 end
 
-account_owner_roles = [
-    { title: 'Account Owner', department_id: 1}
-].map do |r|
-  print '.'
-  Role.find_or_create_by!(r)
-end
-
-
-
-software_engineering_roles = [
-    { title: 'Project Manager', department_id: 4 },
-    { title: 'Software Engineer', department_id: 4 },
-    { title: 'Associate Software Engineer', department_id: 4 },
-].map do |r|
-  print '.'
-  Role.find_or_create_by!(r)
-end
-
-human_resource_roles = [
-    { title: 'HR', department_id: 6 },
-].map do |r|
-  print '.'
-  Role.find_or_create_by!(r)
-end
-
 ############   Module UsersController/Devise Permissions
 Permission.find_or_create_by(name: "users_index", description: "Manage Users Index Page", group: "Users", display_name: "View all Users" )
 Permission.find_or_create_by(name: "users_update", description: "Update User", group: "Users", display_name: "Update User" )
@@ -70,7 +45,7 @@ Permission.find_or_create_by(name: "users_destroy", description: "Destroy User",
 Permission.find_or_create_by(name: "registrations_create", description: "Create New User", group: "Users", display_name: "Create User" )
 Permission.find_or_create_by(name: "users_show", description: "View User Profile", group: "Users", display_name: "View Profile")
 Permission.find_or_create_by(name: "users_create", description: "Create New User ", group: "Users", display_name: "Invite New User")
-
+Permission.find_or_create_by(name: "users_update_all", description: "Update Other Users", group: "Users", display_name: "Update Other Users")
 
 ############   Module DepartmentsController Permissions
 Permission.find_or_create_by(name: "departments_index", description: "Departments Index Page", group: "Department", display_name: "View Departments")
@@ -119,6 +94,13 @@ Permission.find_or_create_by(name: "tickets_create", description: "Create New Ti
 Permission.find_or_create_by(name: "tickets_update", description: "Update Ticket", group: "Tickets", display_name: "Update Tickets")
 Permission.find_or_create_by(name: "tickets_ticket_option", description: "Options For Tickets", group: "Tickets", display_name: "Add Ticket Options")
 Permission.find_or_create_by(name: "tickets_statuses", description: "Tickets Statuses", group: "Tickets" , display_name: "View Ticket Statuses")
+
+roles = ["New Hiring","Advanced","Account Owner"]
+
+roles.each do |role|
+  Role.find_or_create_by(title: role, department_id: 1)
+end
+
 
 Role.find_by(title: 'Account Owner').permissions << Permission.all
 

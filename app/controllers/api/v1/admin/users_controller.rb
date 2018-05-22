@@ -9,12 +9,18 @@ class Api::V1::Admin::UsersController < ApplicationController
     params = user_params
     params.merge!(password: "pass1234", company_id: 1)
     @user = User.new(params)
-    @user.save!
-    @user.update(tokens: nil)
-    unless @user.is_future_joining?
-      @user.send_reset_password_instructions
+    if @user.save
+      @user.update(tokens: nil)
+      basic_role = Role.find_by(title: "New Hiring")
+      @user.roles << basic_role if basic_role.present?
+      unless @user.is_future_joining?
+        SendMailOnUserCreationJob.perform_later(@user)
+      end
+      render json: @user
+    else
+      render json: {alert: "Error Occurred",  status: 500}
+
     end
-    render json: @user
   end
 
 
