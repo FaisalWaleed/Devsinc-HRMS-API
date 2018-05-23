@@ -31,6 +31,7 @@ gem 'rack-cors'
 gem "active_model_serializers"
 gem 'whenever', require: false
 gem 'carrierwave'
+gem "carrierwave-aws"
 gem 'delayed_job_active_record'
 gem "daemons"
 
