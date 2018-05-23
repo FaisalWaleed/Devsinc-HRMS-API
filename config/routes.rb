@@ -22,7 +22,10 @@ Rails.application.routes.draw do
           post :remove_user
         end
         resources :departments
-        resources :users
+        resources :users do
+          get :soft_restore
+        end
+
       end
 
 
