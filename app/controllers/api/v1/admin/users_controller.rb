@@ -25,8 +25,16 @@ class Api::V1::Admin::UsersController < ApplicationController
 
 
   def update
-    @user.update!(user_params)
-    render :json => @user
+    if params[:user][:id].to_i == current_user.id || is_account_owner?(current_user)
+      @user = User.find(params[:user][:id])
+      if @user.present? && @user.update_attributes(user_params)
+        render :json => @user
+      else
+        render json: {message: "Error in Updating Profile" , status: 500}
+      end
+    else
+      render json: { message: "Unauthorized" , status: 401 }
+    end
   end
 
   def destroy
@@ -52,9 +60,9 @@ class Api::V1::Admin::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(
+        :id,
         :email,
         :company_id,
-        :username,
         :first_name,
         :last_name,
         :contact_number,
