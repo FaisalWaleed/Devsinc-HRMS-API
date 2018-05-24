@@ -21,7 +21,9 @@ class UserSerializer < ActiveModel::Serializer
              :join_date,
              :title,
              :manager,
-             :buddy_id
+             :buddy_id,
+             :deleted_at
+  
   def name
     object.name
   end
