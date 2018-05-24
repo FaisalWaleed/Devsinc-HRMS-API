@@ -72,7 +72,7 @@ class Api::V1::TicketsController < ApplicationController
           {
               :role_id => role.id,
               :role_name => role.title,
-              :users => role.users.select(:id,:name)
+              :users => role.users.select(:id,:first_name, :last_name)
           }
     end
     render :json => options

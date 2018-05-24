@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180522090200) do
+ActiveRecord::Schema.define(version: 20180523114841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,7 +175,6 @@ ActiveRecord::Schema.define(version: 20180522090200) do
     t.json "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "username"
     t.bigint "company_id", null: false
     t.string "contact_number"
     t.string "secondary_contact_number"
@@ -195,12 +194,12 @@ ActiveRecord::Schema.define(version: 20180522090200) do
     t.integer "buddy_id"
     t.boolean "allow_password_change", default: false
     t.string "title"
+    t.datetime "deleted_at"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
-    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   add_foreign_key "comments", "tickets"

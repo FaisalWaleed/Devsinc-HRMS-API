@@ -2,7 +2,6 @@ class UserSerializer < ActiveModel::Serializer
   attributes :id,
              :first_name,
              :last_name,
-             :username,
              :email,
              :company_id,
              :contact_number,
@@ -22,7 +21,13 @@ class UserSerializer < ActiveModel::Serializer
              :join_date,
              :title,
              :manager,
-             :buddy_id
+             :buddy_id,
+             :deleted_at
+
+  def image
+    "http://localhost:3000#{object.image&.url.to_s}"
+  end
+
   def name
     object.name
   end

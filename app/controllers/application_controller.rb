@@ -23,7 +23,6 @@ class ApplicationController < ActionController::API
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [
       :company_id,
-      :username,
       :first_name,
       :last_name,
       :contact_number,
@@ -59,6 +58,10 @@ class ApplicationController < ActionController::API
         status: 401
       }, status: 401
     end
+  end
+
+  def is_account_owner? user
+    user.roles.pluck(:title).include?("Account Owner")
   end
 
   def get_user_permissions
