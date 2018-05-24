@@ -23,7 +23,11 @@ class UserSerializer < ActiveModel::Serializer
              :manager,
              :buddy_id,
              :deleted_at
-  
+
+  def image
+    "http://localhost:3000#{object.image&.url.to_s}"
+  end
+
   def name
     object.name
   end

@@ -38,16 +38,15 @@ class Api::V1::Admin::UsersController < ApplicationController
   end
 
 
-
   def destroy
     if params[:id].present? && is_account_owner?(current_user) && User.exists?(params[:id])
       deleted_user =  User.find(params[:id]).soft_delete
       render status: 200, json: {
-          userId: params[:id],
-          message: "Successfully Disable User"
+          user: deleted_user,
+          message: "Successfully Disabled User"
       }
     else
-      render status: 5000, json: {
+      render status: 500, json: {
         message: "Error Occurred"
       }
     end
