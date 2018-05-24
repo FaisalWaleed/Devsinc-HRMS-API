@@ -23,7 +23,7 @@ Rails.application.routes.draw do
         end
         resources :departments
         resources :users do
-          get :soft_restore
+          post :restore_user
         end
 
       end

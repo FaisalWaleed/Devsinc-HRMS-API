@@ -2,7 +2,7 @@ class Api::V1::Admin::UsersController < ApplicationController
   before_action :set_user, only: [:update, :destroy, :show]
 
   def index
-    render :json => User.all
+    render :json => User.all.order(:first_name)
   end
 
   def create
