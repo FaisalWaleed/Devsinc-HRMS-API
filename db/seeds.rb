@@ -97,7 +97,7 @@ Permission.find_or_create_by(name: "tickets_update", description: "Update Ticket
 Permission.find_or_create_by(name: "tickets_ticket_option", description: "Options For Tickets", group: "Tickets", display_name: "Add Ticket Options")
 Permission.find_or_create_by(name: "tickets_statuses", description: "Tickets Statuses", group: "Tickets" , display_name: "View Ticket Statuses")
 
-roles = ["New Hiring","Advanced","Account Owner"]
+roles = ["New Hiring","Advanced","Account Owner","Human Resource"]
 
 roles.each do |role|
   Role.find_or_create_by(title: role, department_id: 1)

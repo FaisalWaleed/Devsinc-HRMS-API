@@ -8,7 +8,7 @@ class Api::V1::LeavesController < ApplicationController
 
   def leave_approvals
     leaves = Leave.leave_approvals(current_user)
-    if current_user.roles.pluck(:title).include?('Admin')
+    if current_user.roles.pluck(:title).include?('Human Resource')
       hr_leaves = Leave.hr_leaves
       leaves += leaves + hr_leaves
     end
