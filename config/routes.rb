@@ -42,6 +42,7 @@ Rails.application.routes.draw do
         collection do
           get :leave_approvals
           get :user_leaves_history
+          get :all_leaves
         end
       end
 

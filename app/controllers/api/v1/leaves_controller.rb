@@ -6,6 +6,10 @@ class Api::V1::LeavesController < ApplicationController
     render :json => current_user.leaves
   end
 
+  def all_leaves
+    render :json => Leave.all
+  end
+
   def leave_approvals
     leaves = Leave.leave_approvals(current_user)
     if current_user.roles.pluck(:title).include?('Human Resource')

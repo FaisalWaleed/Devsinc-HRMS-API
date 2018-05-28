@@ -54,7 +54,7 @@ class Api::V1::Admin::UsersController < ApplicationController
 
   def restore_user
     if params[:id].present? && is_account_owner?(current_user) && User.exists?(params[:id])
-      restored_user =  User.find(params[:id]).soft_restore
+      User.find(params[:id]).soft_restore
       render status: 200, json: {
           userId: params[:id],
           message: "Successfully enabled User"
@@ -66,25 +66,11 @@ class Api::V1::Admin::UsersController < ApplicationController
     end
   end
 
-  # def destroy
-
-  #   puts params.inspect
-  #   puts params[:id]
-  #   if @user.destroy
-  #     render status: 200, json: {
-  #         userId: params[:id],
-  #         message: "Successfully deleted user"
-  #     }
-  #   end
-  # end
-
   def show
     render json: @user
   end
 
   private
-
-
 
   def set_user
     @user = User.find(params[:id])
