@@ -93,7 +93,6 @@ class Api::V1::Admin::UsersController < ApplicationController
   def user_params
     params.require(:user).permit(
         :id,
-        :email,
         :company_id,
         :first_name,
         :last_name,
