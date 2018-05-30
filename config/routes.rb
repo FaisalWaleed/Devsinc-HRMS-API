@@ -23,7 +23,7 @@ Rails.application.routes.draw do
         end
         resources :departments
         resources :users do
-          get :soft_restore
+          post :restore_user
         end
 
       end
@@ -42,6 +42,7 @@ Rails.application.routes.draw do
         collection do
           get :leave_approvals
           get :user_leaves_history
+          get :all_leaves
         end
       end
 

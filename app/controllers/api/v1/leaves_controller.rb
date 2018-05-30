@@ -6,12 +6,15 @@ class Api::V1::LeavesController < ApplicationController
     render :json => current_user.leaves
   end
 
+  def all_leaves
+    month_leaves = "COALESCE((SELECT SUM(month_details.total_days) FROM (SELECT (leaves.end_date::date - leaves.start_date::date) as total_days FROM leaves WHERE leaves.user_id=users.id AND leaves.start_date >= date_trunc('month', current_date))month_details ),0) as month_leaves"
+    year_leaves = "  COALESCE((SELECT SUM(month_details.total_days) FROM (SELECT (leaves.end_date::date - leaves.start_date::date) as total_days FROM leaves WHERE leaves.user_id=users.id AND leaves.start_date >= date_trunc('year', current_date ))month_details ),0) as year_leaves"
+    all_user_leaves = User.joins(:leaves).select("users.id,users,first_name,users.last_name,#{month_leaves},#{year_leaves}").group("users.id").to_a
+    render :json => all_user_leaves, each_serializer: UserLeaveSerializer
+  end
+
   def leave_approvals
     leaves = Leave.leave_approvals(current_user)
-    if current_user.roles.pluck(:title).include?('Admin')
-      hr_leaves = Leave.hr_leaves
-      leaves += leaves + hr_leaves
-    end
     render :json => (leaves.uniq)
   end
 

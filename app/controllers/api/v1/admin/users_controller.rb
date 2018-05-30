@@ -2,7 +2,7 @@ class Api::V1::Admin::UsersController < ApplicationController
   before_action :set_user, only: [:update, :destroy, :show]
 
   def index
-    render :json => User.all
+    render :json => User.all.order(:first_name)
   end
 
   def create
@@ -54,7 +54,7 @@ class Api::V1::Admin::UsersController < ApplicationController
 
   def restore_user
     if params[:id].present? && is_account_owner?(current_user) && User.exists?(params[:id])
-      restored_user =  User.find(params[:id]).soft_restore
+      User.find(params[:id]).soft_restore
       render status: 200, json: {
           userId: params[:id],
           message: "Successfully enabled User"
@@ -66,25 +66,11 @@ class Api::V1::Admin::UsersController < ApplicationController
     end
   end
 
-  # def destroy
-
-  #   puts params.inspect
-  #   puts params[:id]
-  #   if @user.destroy
-  #     render status: 200, json: {
-  #         userId: params[:id],
-  #         message: "Successfully deleted user"
-  #     }
-  #   end
-  # end
-
   def show
     render json: @user
   end
 
   private
-
-
 
   def set_user
     @user = User.find(params[:id])
@@ -93,7 +79,6 @@ class Api::V1::Admin::UsersController < ApplicationController
   def user_params
     params.require(:user).permit(
         :id,
-        :email,
         :company_id,
         :first_name,
         :last_name,

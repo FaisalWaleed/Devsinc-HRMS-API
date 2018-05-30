@@ -46,6 +46,8 @@ Permission.find_or_create_by(name: "registrations_create", description: "Create 
 Permission.find_or_create_by(name: "users_show", description: "View User Profile", group: "Users", display_name: "View Profile")
 Permission.find_or_create_by(name: "users_create", description: "Create New User ", group: "Users", display_name: "Invite New User")
 Permission.find_or_create_by(name: "users_update_all", description: "Update Other Users", group: "Users", display_name: "Update Other Users")
+Permission.find_or_create_by(name: "users_restore_user", description: "Unblock Users", group: "Users", display_name: "Unblock Users")
+
 
 ############   Module DepartmentsController Permissions
 Permission.find_or_create_by(name: "departments_index", description: "Departments Index Page", group: "Department", display_name: "View Departments")
@@ -85,7 +87,7 @@ Permission.find_or_create_by(name: "leaves_index", description: "Leaves Index Pa
 Permission.find_or_create_by(name: "leaves_leave_approvals", description: "Leave Approvals", group: "Leaves", display_name: "Leave Approvals")
 Permission.find_or_create_by(name: "leaves_create", description: "Create New Leave", group: "Leaves", display_name: "Create new Leave")
 Permission.find_or_create_by(name: "leaves_user_leaves_history", description: "User Leave History", group: "Leaves", display_name: "User Leave History")
-
+Permission.find_or_create_by(name: "leaves_all_leaves", description: "All Users' Leaves", group: "Leaves", display_name: "All Users' Leave Summary")
 
 ############   Module TicketsController  Permissions
 Permission.find_or_create_by(name: "tickets_index", description: "Tickets Index Page", group: "Tickets", display_name: "View Tickets")
@@ -95,7 +97,7 @@ Permission.find_or_create_by(name: "tickets_update", description: "Update Ticket
 Permission.find_or_create_by(name: "tickets_ticket_option", description: "Options For Tickets", group: "Tickets", display_name: "Add Ticket Options")
 Permission.find_or_create_by(name: "tickets_statuses", description: "Tickets Statuses", group: "Tickets" , display_name: "View Ticket Statuses")
 
-roles = ["New Hiring","Advanced","Account Owner"]
+roles = ["New Hiring","Advanced","Account Owner","Human Resource"]
 
 roles.each do |role|
   Role.find_or_create_by(title: role, department_id: 1)

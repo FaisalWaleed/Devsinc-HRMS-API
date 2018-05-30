@@ -63,6 +63,6 @@ class User < ActiveRecord::Base
   end
 
   def soft_restore
-    update_attribute(:deleted_at, nil)
+    self.update_attribute(:deleted_at, nil)
   end
 end
