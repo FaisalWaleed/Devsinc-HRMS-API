@@ -1,12 +1,8 @@
 class Api::V1::TicketsController < ApplicationController
   include TicketsHelper
   before_action :set_ticket, only: [:update,:destroy]
-  # before_action :authenticate_user!
 
   def index
-    # if admin
-    #   return Ticket.all
-    # end
     render :json => current_user.tickets
   end
 
@@ -52,13 +48,13 @@ class Api::V1::TicketsController < ApplicationController
       if ticket_params[:ticket_user_id]
         ticket_user = TicketUser.find(ticket_params[:ticket_user_id])
         if ticket_user.ticket.user_id == current_user.id
-          change_ticket_status_for_user(@ticket, nil , status, ticket_user)
+          change_ticket_status_for_user(@ticket, ticket_user.user , status)
         end
       else
         change_ticket_status_for_all(@ticket,status)
       end
     else
-      change_ticket_status_for_user(@ticket, current_user.id, status)
+      change_ticket_status_for_user(@ticket, current_user, status)
     end
     render :json => @ticket
   end

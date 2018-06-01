@@ -5,7 +5,7 @@ class Ticket < ApplicationRecord
   belongs_to :user
 
   def set_statuses( status = "Open")
-    self.ticket_user.each do |ticket_user|
+    self.ticket_user.find_each do |ticket_user|
       TicketStatus.create(
           {
               ticket_user_id: ticket_user.id,
