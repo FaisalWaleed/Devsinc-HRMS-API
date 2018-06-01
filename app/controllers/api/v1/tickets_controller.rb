@@ -21,7 +21,7 @@ class Api::V1::TicketsController < ApplicationController
       assign_ticket_to_all_users(@ticket)
       @ticket.set_statuses
     else
-      refined_ticket_options = refine_ticket_options params[:ticket][:ticket_options]
+      refined_ticket_options = refine_ticket_options(params[:ticket][:ticket_options])
       refined_ticket_options.each do |ticket_option|
         params = ticket_params
         params = params.merge(user_id: current_user.id,department_id: ticket_option["department_id"], role_id: ticket_option["role_id"])
@@ -36,9 +36,8 @@ class Api::V1::TicketsController < ApplicationController
         else
           ticket_option["user_id"].each do |user|
             user = User.find(user)
-            if user != current_user
-              user.assigned_tickets << @ticket
-            end
+            user.assigned_tickets << @ticket if user != current_user
+            TicketMailer.ticket_assigned(@ticket,user).deliver_later
           end
         end
         @ticket.set_statuses

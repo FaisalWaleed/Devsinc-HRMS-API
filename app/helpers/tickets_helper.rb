@@ -24,16 +24,17 @@ module TicketsHelper
     ticket_options.select { |option|
       (!option.empty?) &&
           (
-            (deps_with_all_roles.include?(option["department_id"]) && option["role_id"] === 0) ||
-            (!deps_with_all_roles.include?(option["department_id"]) && option["role_id"] != 0)
+          (deps_with_all_roles.include?(option["department_id"]) && option["role_id"] === 0) ||
+              (!deps_with_all_roles.include?(option["department_id"]) && option["role_id"] != 0)
           )
     }
   end
 
   def assign_ticket_to_all_users ticket
-    User.all.each do |user|
+    User.find_each do |user|
       if user != current_user
         user.assigned_tickets << ticket
+        TicketMailer.ticket_assigned(ticket,user).deliver_later
       end
     end
   end
@@ -42,6 +43,7 @@ module TicketsHelper
     users.each do |user|
       if user != current_user
         user.assigned_tickets << ticket
+        TicketMailer.ticket_assigned(ticket,user).deliver_later
       end
     end
   end
