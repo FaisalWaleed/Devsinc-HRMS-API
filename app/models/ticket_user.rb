@@ -1,5 +1,5 @@
 class TicketUser < ApplicationRecord
   belongs_to :ticket
   belongs_to :user
-  has_many :ticket_status
+  has_many :ticket_status, dependent: :destroy
 end

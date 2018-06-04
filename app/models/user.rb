@@ -30,14 +30,12 @@ class User < ActiveRecord::Base
 
   mount_uploader :image, ImageUploader
 
-
-
   def send_welcome_email
     UserMailer.welcome_email(self).deliver_now
   end
 
   def name
-    self.first_name + " " + self.last_name
+    "#{self.first_name} #{self.last_name}"
   end
 
   def reports_to
@@ -64,5 +62,13 @@ class User < ActiveRecord::Base
 
   def soft_restore
     self.update_attribute(:deleted_at, nil)
+  end
+
+  def has_permission?(permission)
+    permitted = false
+    self.roles.each do |role|
+      role.permissions.pluck(:name).include?(permission) ? permitted = true : false
+    end
+    permitted
   end
 end
