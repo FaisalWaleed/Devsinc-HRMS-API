@@ -148,7 +148,7 @@
   <tr>
     <td>
       <div style="overflow:hidden;display:none;font-size:1px;color:#ffffff;line-height:1px;font-family:Arial;maxheight:0px;max-width:0px;opacity:0;">
-        Welcome! Successfully signed up for DevsInc!
+        <%= @approved_by.name %> approved your leave! %>
       </div>
     </td>
   </tr>
@@ -187,9 +187,8 @@
         <tr>
           <td align="center" style="color: #343434; font-size: 24px; font-family: Quicksand, Calibri, sans-serif; font-weight:700;letter-spacing: 3px; line-height: 35px;" class="main-header">
             <div style="line-height: 25px">
-              <%= "#{@user.first_name} #{@user.last_name}" %>! Welcome to Devsinc!
+              <%= "#{@approved_by.name} approved #{@user.name}'s leave application for #{@date_diff} days from #{@leave.start_date.strftime("%B %d, %Y")} to #{@leave.end_date.strftime("%B %d, %Y")}" %>
             </div>
-            <p>You can confirm your account email through the link below: Confirm your account and change password</p>
           </td>
         </tr>
         <tr>
@@ -205,55 +204,9 @@
             </table>
           </td>
         </tr>
-
         <tr>
           <td height="20" style="font-size: 20px; line-height: 20px;">&nbsp;</td>
         </tr>
-
-        <tr>
-          <td align="center">
-            <table border="0" width="400" align="center" cellpadding="0" cellspacing="0" class="container590">
-              <tr>
-                <td align="center" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;">
-                  <div style="line-height: 24px">
-                    We wish you a great time ahead!
-                  </div>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-
-        <tr>
-          <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
-        </tr>
-
-        <tr>
-          <td align="center">
-            <table border="0" align="center" width="160" cellpadding="0" cellspacing="0" bgcolor="5caad2" style="">
-
-              <tr>
-                <td height="10" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
-              </tr>
-
-              <tr>
-                <td align="center" style="color: #ffffff; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 26px;">
-
-
-                  <div style="color: #ffffff; line-height: 26px;">
-                  <%= link_to 'Go to Dashboard', edit_user_password_url(reset_password_token: @token ,redirect_url: 'http://localhost:3001/welcome'.to_s,  style: "color: #ffffff !important; text-decoration: none;") %>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td height="10" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
-              </tr>
-
-            </table>
-          </td>
-        </tr>
-
 
       </table>
 
@@ -397,17 +350,17 @@
             </table>
           </td>
         </tr>
-            </table>
-          </td>
-        </tr>
-
       </table>
     </td>
   </tr>
 
-  <tr>
-    <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
-  </tr>
+</table>
+</td>
+</tr>
+
+<tr>
+  <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
+</tr>
 
 </table>
 <!-- end footer ====== -->

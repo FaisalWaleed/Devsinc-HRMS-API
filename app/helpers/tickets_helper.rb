@@ -24,16 +24,17 @@ module TicketsHelper
     ticket_options.select { |option|
       (!option.empty?) &&
           (
-            (deps_with_all_roles.include?(option["department_id"]) && option["role_id"] === 0) ||
-            (!deps_with_all_roles.include?(option["department_id"]) && option["role_id"] != 0)
+          (deps_with_all_roles.include?(option["department_id"]) && option["role_id"] === 0) ||
+              (!deps_with_all_roles.include?(option["department_id"]) && option["role_id"] != 0)
           )
     }
   end
 
   def assign_ticket_to_all_users ticket
-    User.all.each do |user|
+    User.find_each do |user|
       if user != current_user
         user.assigned_tickets << ticket
+        TicketMailer.ticket_assigned(ticket,user).deliver_later
       end
     end
   end
@@ -42,12 +43,13 @@ module TicketsHelper
     users.each do |user|
       if user != current_user
         user.assigned_tickets << ticket
+        TicketMailer.ticket_assigned(ticket,user).deliver_later
       end
     end
   end
 
   def change_ticket_status_for_all ( ticket, status )
-    ticket.ticket_user.each do |ticket_user|
+    ticket.ticket_user.find_each do |ticket_user|
       ticket_user.ticket_status.active.update_attributes({active: false})
       ticket_user.ticket_status <<
           TicketStatus.create(
@@ -60,11 +62,9 @@ module TicketsHelper
     end
   end
 
-  def change_ticket_status_for_user ( ticket, userid, status, ticket_user = nil )
-    unless ticket_user
-      ticket_user = ticket.ticket_user.find_by(user_id: userid)
-    end
-    ticket_user.ticket_status.active.update_attributes({active: false})
+  def change_ticket_status_for_user ( ticket, user, status )
+    ticket_user = ticket.ticket_user.find_by(user_id: user.id)
+    ticket_user.ticket_status.active.update_attribute(:active, false)
     ticket_user.ticket_status <<
         TicketStatus.create(
             {
@@ -73,5 +73,6 @@ module TicketsHelper
                 active: true
             }
         )
+    TicketMailer.ticket_status_changed(ticket,user,status).deliver_later
   end
 end

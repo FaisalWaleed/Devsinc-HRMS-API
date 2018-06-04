@@ -4,6 +4,8 @@ class Api::V1::LeaveStatusesController < ApplicationController
     params = leave_status_params.merge(user_id: current_user.id)
     params[:status] = leave_status_params[:status]
     @leave_status = LeaveStatus.create!(params)
+    LeaveMailer.leave_status_changed(@leave_status).deliver_later unless @leave_status.status == "pending"
+    LeaveMailer.hr_leave_approved(@leave_status).deliver_later if @leave_status.status == "approved"
     render :json => @leave_status
   end
 

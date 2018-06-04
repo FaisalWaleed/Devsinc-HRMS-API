@@ -26,7 +26,7 @@ departments = [
 print 'Creating Users'
 pass = { password: 'pass1234', password_confirmation: 'pass1234' }
 users = [
-    { first_name: 'Account',last_name: 'Owner', email: 'admin@devsinc.com', company_id: companies[0].id, reporting_to: 1, buddy_id: 1, join_date: Date.new , confirmed_at: Time.now},
+    { first_name: 'Account',last_name: 'Owner', email: 'admin@devsinc.com', company_id: companies[0].id, reporting_to: 1, buddy_id: 1, join_date: Date.new , confirmed_at: Time.now, title: "Account Owner"},
     { first_name: 'Jawad',last_name: 'Firdous', email: 'jawad.firdous@devsinc.com', company_id: companies[0].id, reporting_to: 1, buddy_id: 1, join_date: Date.new, confirmed_at: Time.now},
     { first_name: 'Faisal',last_name: 'Waleed', email: 'faisal.waleed@devsinc.com', company_id: companies[0].id,reporting_to: 1, buddy_id: 1, join_date: Date.new, confirmed_at: Time.now },
     { first_name: 'Salman',last_name: 'Ali', email: 'salman.ali@devsinc.com', company_id: companies[0].id , reporting_to: 1, buddy_id: 1, join_date: Date.new, confirmed_at: Time.now},

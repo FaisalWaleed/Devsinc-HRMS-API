@@ -25,7 +25,7 @@ class UserSerializer < ActiveModel::Serializer
              :deleted_at
 
   def image
-    "http://localhost:3000#{object.image&.url.to_s}"
+    object.image.url ? "http://localhost:3000#{object.image&.url.to_s}" : nil
   end
 
   def name
