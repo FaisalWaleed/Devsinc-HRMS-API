@@ -1,5 +1,7 @@
 class TicketSerializer < ActiveModel::Serializer
 
+  attributes :id,:title,:description,:due_date,:status,:overall_status, :created_by, :created_at
+
   def status
     object.ticket_user.find_by(user_id: current_user.id) ?
         object.ticket_user.find_by(user_id: current_user.id).ticket_status.active.status :
@@ -7,7 +9,7 @@ class TicketSerializer < ActiveModel::Serializer
   end
 
   def overall_status
-    if object.user_id == current_user.id
+    if object.user_id == current_user.id || current_user.has_permission?("tickets_all_tickets") #handle for has admin perms
       overall_status = {
           open: [],
           closed: [],
@@ -31,7 +33,5 @@ class TicketSerializer < ActiveModel::Serializer
   def created_by
     object.user.name
   end
-
-  attributes :id,:title,:description,:due_date,:status,:overall_status, :created_by
 
 end

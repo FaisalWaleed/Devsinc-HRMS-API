@@ -31,10 +31,11 @@ Rails.application.routes.draw do
 
       resources :tickets do
         resources :comments
-        get :statuses
         collection do
+          get :statuses
           get :assigned
           get :ticket_option
+          get :all_tickets
         end
       end
 

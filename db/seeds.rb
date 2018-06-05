@@ -96,6 +96,7 @@ Permission.find_or_create_by(name: "tickets_create", description: "Create New Ti
 Permission.find_or_create_by(name: "tickets_update", description: "Update Ticket", group: "Tickets", display_name: "Update Tickets")
 Permission.find_or_create_by(name: "tickets_ticket_option", description: "Options For Tickets", group: "Tickets", display_name: "Add Ticket Options")
 Permission.find_or_create_by(name: "tickets_statuses", description: "Tickets Statuses", group: "Tickets" , display_name: "View Ticket Statuses")
+Permission.find_or_create_by(name: "tickets_all_tickets", description: "Tickets All Tickets", group: "Tickets" , display_name: "View All Tickets")
 
 roles = ["New Hiring","Advanced","Account Owner","Human Resource"]
 

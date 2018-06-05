@@ -78,6 +78,10 @@ class Api::V1::TicketsController < ApplicationController
     render :json => @ticket.ticket_user
   end
 
+  def all_tickets
+    render json: Ticket.all
+  end
+
   private
 
   def set_ticket
