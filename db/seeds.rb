@@ -38,6 +38,16 @@ users = [
   User.find_or_create_by!(u) { |u| u.assign_attributes(pass) }
 end
 
+############   Configurations
+
+#VALUES SPECIFIED IN DAYS
+Configuration.find_or_create_by(key: "ANNUAL_LEAVES", value: "14")
+Configuration.find_or_create_by(key: "SICK_LEAVES_PAID", value: "10")
+Configuration.find_or_create_by(key: "SICK_LEAVES_HALF_PAID", value: "20")
+Configuration.find_or_create_by(key: "SICK_LEAVES_UNPAID", value: "30")
+Configuration.find_or_create_by(key: "COMPENSATION_LEAVE", value: "3")
+
+
 ############   Module UsersController/Devise Permissions
 Permission.find_or_create_by(name: "users_index", description: "Manage Users Index Page", group: "Users", display_name: "View all Users" )
 Permission.find_or_create_by(name: "users_update", description: "Update User", group: "Users", display_name: "Update User" )
