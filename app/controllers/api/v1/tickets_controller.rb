@@ -74,7 +74,7 @@ class Api::V1::TicketsController < ApplicationController
   end
 
   def statuses
-    @ticket = Ticket.find(params[:ticket_id])
+    @ticket = Ticket.find(params[:id])
     render :json => @ticket.ticket_user
   end
 
