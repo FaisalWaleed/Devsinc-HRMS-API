@@ -29,9 +29,9 @@ class Api::V1::LeavesController < ApplicationController
     render :json =>
                {
                    user_id: user.id,
-                   year: get_year_leaves(user),
-                   month: get_month_leaves(user),
-                   quota: 14
+                   annual: get_year_leaves(user).where(leave_type: "annual").count,
+                   sick: get_year_leaves(user).where(leave_type: "sick").count,
+                   compensation: get_year_leaves(user).where(leave_type: "compensation").count,
                }
   end
 
