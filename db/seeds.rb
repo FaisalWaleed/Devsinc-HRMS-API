@@ -98,6 +98,7 @@ Permission.find_or_create_by(name: "leaves_leave_approvals", description: "Leave
 Permission.find_or_create_by(name: "leaves_create", description: "Create New Leave", group: "Leaves", display_name: "Create new Leave")
 Permission.find_or_create_by(name: "leaves_user_leaves_history", description: "User Leave History", group: "Leaves", display_name: "User Leave History")
 Permission.find_or_create_by(name: "leaves_all_leaves", description: "All Users' Leaves", group: "Leaves", display_name: "All Users' Leave Summary")
+Permission.find_or_create_by(name: "leaves_get_user_leaves", description: "Get Other User Leaves", group: "Leaves", display_name: "Get Other User Leaves")
 
 ############   Module TicketsController  Permissions
 Permission.find_or_create_by(name: "tickets_index", description: "Tickets Index Page", group: "Tickets", display_name: "View Tickets")
