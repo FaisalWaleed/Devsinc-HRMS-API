@@ -42,6 +42,9 @@ Rails.application.routes.draw do
       end
 
       resources :leaves, only: [:create, :index] do
+        member do
+          get :get_user_leaves
+        end
         collection do
           get :leave_approvals
           get :user_leaves_history
