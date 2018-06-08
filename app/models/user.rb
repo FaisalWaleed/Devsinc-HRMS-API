@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
   # Include default devise modules.
   devise :database_authenticatable, :registerable,
-          :recoverable, :rememberable, :trackable, :validatable,
-          :omniauthable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable
 
   include DeviseTokenAuth::Concerns::User
 
@@ -68,7 +68,21 @@ class User < ActiveRecord::Base
     permitted = false
     self.roles.each do |role|
       role.permissions.pluck(:name).include?(permission) ? permitted = true : false
+      break if permitted
     end
     permitted
   end
+
+  def team_members
+    team_members = []
+    User.where(reporting_to: self.id).each do |user|
+      team_members.push({
+                            id: user.id,
+                            name: user.name,
+                            image: user.image.url ? "http://localhost:3000#{user.image&.url.to_s}" : "http://www.copypanthers.com/wp-content/uploads/2015/07/avatars__Jorn.png"
+                        })
+    end
+    team_members
+  end
+
 end

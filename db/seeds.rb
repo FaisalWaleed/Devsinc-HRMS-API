@@ -51,7 +51,6 @@ Configuration.find_or_create_by(key: "COMPENSATION_LEAVE", value: "3")
 ############   Module UsersController/Devise Permissions
 Permission.find_or_create_by(name: "users_index", description: "Manage Users Index Page", group: "Users", display_name: "View all People" )
 Permission.find_or_create_by(name: "users_update", description: "Update User", group: "Users", display_name: "Update Profile" )
-Permission.find_or_create_by(name: "registrations_create", description: "Create New User", group: "Users", display_name: "Invite Users" )
 Permission.find_or_create_by(name: "users_show", description: "View User Profile", group: "Users", display_name: "View Profiles")
 Permission.find_or_create_by(name: "users_create", description: "Create New User ", group: "Users", display_name: "Invite New Users")
 Permission.find_or_create_by(name: "users_update_all", description: "Update Other Users", group: "Users", display_name: "Update Other Users' Profiles")

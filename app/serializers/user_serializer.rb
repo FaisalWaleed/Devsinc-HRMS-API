@@ -21,11 +21,12 @@ class UserSerializer < ActiveModel::Serializer
              :join_date,
              :title,
              :manager,
+             :team_members,
              :buddy_id,
              :deleted_at
 
   def image
-    object.image.url ? "http://localhost:3000#{object.image&.url.to_s}" : nil
+    object.image.url ? "http://localhost:3000#{object.image&.url.to_s}" : "http://www.copypanthers.com/wp-content/uploads/2015/07/avatars__Jorn.png"
   end
 
   def name
@@ -33,7 +34,15 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def manager
-    object.reports_to.name
+    {
+        id: object.reporting_to,
+        name: object.reports_to.name,
+        image: object.reports_to.image.url ? "http://localhost:3000#{object.reports_to.image&.url.to_s}" : "http://www.copypanthers.com/wp-content/uploads/2015/07/avatars__Jorn.png"
+    }
+  end
+
+  def team_members
+    object.team_members
   end
 
 end
